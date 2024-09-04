@@ -20,6 +20,7 @@ export const {
       clientSecret: process.env.AUTH_KAKAO_SECRET,
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     signIn: async ({ account, user }) => {
       if (account?.provider === 'naver') {
