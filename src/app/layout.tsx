@@ -19,8 +19,10 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body style={{ fontFamily: 'Pretendard' }}>
-        <Topbar />
-        <AuthSession>{children}</AuthSession>
+        <AuthSession>
+          <Topbar />
+          {children}
+        </AuthSession>
       </body>
     </html>
   );

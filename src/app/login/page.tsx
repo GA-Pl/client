@@ -1,6 +1,7 @@
 import NaverLogin from './_component/NaverLogin';
 import Image from 'next/image';
 import TypingTop from './_component/TypingTop';
+import KakaoLogin from './_component/KakaoLogin';
 
 const LoginPage = () => {
   return (
@@ -22,6 +23,7 @@ const LoginPage = () => {
         </div>
         <div className="mt-6">
           <NaverLogin />
+          <KakaoLogin />
         </div>
       </div>
     </div>

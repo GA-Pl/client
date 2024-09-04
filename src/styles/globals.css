@@ -32,4 +32,7 @@ body {
   .button-effect {
     @apply transition-transform duration-300 ease-in-out hover:scale-110 active:scale-95 cursor-pointer;
   }
+  .button-border {
+    @apply border-solid border-2 border-primary;
+  }
 }

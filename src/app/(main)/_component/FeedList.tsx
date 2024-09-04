@@ -24,7 +24,6 @@ function FeedList() {
     }
     fetchData();
   }, []);
-  console.log(feeds);
 
   // function FeedList({ feeds }) {
   return (

@@ -29,12 +29,5 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 ---
 
 | Frontend | Backend |
-| -------- | ------- |
-
-<<<<<<< HEAD
 | 곽민경 | 김정은 |
-=======
 | mikio999 | |
-
-> > > > > > > 61aaf87 (#1 Add: feed page 레이아웃 완료)
-> > > > > > > | | |
