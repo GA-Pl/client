@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import '../styles/globals.css';
-import Topbar from './(main)/_component/Topbar';
 import AuthSession from '@/_component/AuthSession';
+import SideBar from './(main)/_component/NavBar/SideBar';
 
 export const metadata: Metadata = {
   title: 'GA:Pl',
@@ -18,10 +18,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body style={{ fontFamily: 'Pretendard' }}>
+      <body
+        className="flex justify-center items-center"
+        style={{ fontFamily: 'Pretendard' }}
+      >
         <AuthSession>
-          <Topbar />
-          {children}
+          <SideBar />
+          <main
+            className="
+              mt-20 tablet:mt-0 tablet:ml-0
+              laptop:ml-20 desktop:ml-52
+              flex-grow
+              p-4
+            "
+          >
+            {children}
+          </main>
         </AuthSession>
       </body>
     </html>

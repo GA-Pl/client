@@ -12,7 +12,7 @@ interface FeedProps {
 
 export default function Feed({ feed }: FeedProps) {
   return (
-    <div className="max-w-sm mx-auto my-4">
+    <div className="mx-auto my-4 max-w-xs tablet:max-w-sm laptop:max-w-md desktop:max-w-lg">
       <div
         key={feed.document_id}
         className="bg-white border rounded-lg overflow-hidden"

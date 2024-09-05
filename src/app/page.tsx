@@ -1,4 +1,4 @@
-import FeedList from './(main)/_component/FeedList';
+import FeedList from './(main)/_component/Feed/FeedList';
 
 export default async function Home() {
   return (

@@ -23,6 +23,11 @@ const config: Config = {
         gray300: '#CBD5E0',
         gray200: '#E2E8F0',
       },
+      screens: {
+        tablet: '400px',
+        laptop: '640px',
+        desktop: '1024px',
+      },
       scale: {
         '110': '1.10',
         '95': '0.95',
