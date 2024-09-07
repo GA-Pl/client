@@ -35,4 +35,7 @@ body {
   .button-border {
     @apply border-solid border-2 border-primary;
   }
+  .sidebar-transition {
+    @apply transition-all duration-300 ease-in-out;
+  }
 }

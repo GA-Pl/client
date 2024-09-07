@@ -41,6 +41,7 @@ const config: Config = {
       transitionTimingFunction: {
         'in-out': 'ease-in-out',
       },
+      transform: ['responsive', 'hover', 'focus'],
     },
   },
 

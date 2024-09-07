@@ -1,29 +1,29 @@
 import axios from 'axios';
 
 type ResponseValue = {
-  user: {
-    email: string;
-    displayName: string;
-    profileImg?: string;
-  };
+  email: string;
+  name?: string;
+  profileImg?: string;
   accessToken: string;
+  refreshToken: string;
 };
 
-async function _existUser(email: string) {
+async function _existUser(email: string): Promise<boolean> {
   const headers = {
     'Content-Type': 'application/json',
     apikey: process.env.GAPPLE_API_KEY!,
     username: process.env.GAPPLE_API_USERNAME!,
   };
-
   try {
     const response = await axios.get(`${process.env.BASE_API}/auth/exists`, {
       params: { email },
       headers,
     });
-
-    return response.data as boolean;
+    return response.status === 200; // 사용자가 존재하면 true 반환
   } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 404) {
+      return false; // 사용자가 존재하지 않으면 false 반환
+    }
     console.error(error);
     throw new Error('사용자 확인 중 문제가 발생했습니다.');
   }
@@ -32,7 +32,7 @@ async function _existUser(email: string) {
 async function _signIn(
   type: 'oauth/signup' | 'oauth/login',
   body: {
-    email: string;
+    email?: string;
     accessToken: string;
     refreshToken: string;
     displayName?: string;
@@ -49,24 +49,23 @@ async function _signIn(
     const response = await axios.post(
       `${process.env.BASE_API}/auth/${type}`,
       body,
-      {
-        headers,
-      },
+      { headers },
     );
-    const data = response.data as ResponseValue | string;
+
+    const data = response.data.data as ResponseValue;
 
     if (typeof data !== 'string') {
       return {
-        email: data.user.email,
-        name: data.user.displayName || data.user.email.split('@')[0],
-        image: data.user.profileImg,
         accessToken: data.accessToken,
+        refreshToken: data.refreshToken,
+        name: data.name,
+        email: data.email,
+        profileImg: data.profileImg,
       };
-    } else {
-      throw new Error(data);
     }
+    throw new Error(data);
   } catch (error) {
-    console.error(error);
+    console.error('Error in _signIn:', error);
     throw new Error(
       '회원가입 또는 로그인 중 문제가 발생했습니다, 잠시 후 다시 시도하세요.',
     );

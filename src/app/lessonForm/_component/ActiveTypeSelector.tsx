@@ -17,8 +17,8 @@ interface InputProps {
 
 export const ActivityTypeSelector = ({ value, onChange }: InputProps) => (
   <SelectInput
-    label="활동유형"
-    id="activityType"
+    label={'활동유형'}
+    id={'activityType'}
     value={value}
     options={activityOptions}
     onChange={onChange}

@@ -7,12 +7,12 @@ const MENU_ITEMS: MenuItemProps[] = [
     activeIcon: '/icons/homeIconPink.png',
     link: '/',
   },
-  {
-    name: '검색',
-    icon: '/icons/searchIcon.png',
-    activeIcon: '/icons/searchIconPink.png',
-    link: '/search',
-  },
+  // {
+  //   name: '검색',
+  //   icon: '/icons/searchIcon.png',
+  //   activeIcon: '/icons/searchIconPink.png',
+  //   link: '/search',
+  // },
   {
     name: '만들기',
     icon: '/icons/plusIcon.png',

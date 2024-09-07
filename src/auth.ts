@@ -20,67 +20,53 @@ export const {
       clientSecret: process.env.AUTH_KAKAO_SECRET,
     }),
   ],
+  trustHost: true,
+  session: {
+    strategy: 'jwt',
+    maxAge: 60 * 60 * 24,
+  },
+  pages: {
+    signIn: '/signIn',
+  },
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    signIn: async ({ account, user }) => {
-      if (account?.provider === 'naver') {
-        try {
+    async signIn({ account, user }) {
+      const updatedUser = { ...user };
+      if (account && user) {
+        if (account.provider === 'naver' || account.provider === 'kakao') {
           const type = (await _existUser(user.email as string))
             ? 'oauth/login'
             : 'oauth/signup';
-
-          const _user = await _signIn(type, {
-            displayName: user.name as string,
+          const userInfo = await _signIn(type, {
             email: user.email as string,
-            profileImg: user.image as string,
             accessToken: account.access_token as string,
             refreshToken: account.refresh_token as string,
-          });
-          Object.assign(user, _user);
-        } catch (error) {
-          if (error instanceof Error) {
-            return `/error?message=${encodeURIComponent(error.message)}`;
-          }
-        }
-        return false;
-      }
-      if (account?.provider === 'kakao') {
-        try {
-          const type = (await _existUser(user.email as string))
-            ? 'oauth/login'
-            : 'oauth/signup';
-
-          const _user = await _signIn(type, {
             displayName: user.name as string,
-            email: user.email as string,
             profileImg: user.image as string,
-            accessToken: account.access_token as string,
-            refreshToken: account.refresh_token as string,
           });
-          Object.assign(user, _user);
-        } catch (error) {
-          if (error instanceof Error) {
-            return `/error?message=${encodeURIComponent(error.message)}`;
+
+          if (userInfo) {
+            updatedUser.name = userInfo.name;
+            updatedUser.image = userInfo.profileImg;
+            return true; // signIn 콜백 성공
           }
+
+          return false; // signIn 콜백 실패
         }
-        return false;
       }
       return true;
     },
+
     jwt: async ({ token, user, trigger, session }) => {
+      const newToken = { ...token };
       if (user) {
-        Object.assign(token, user);
+        Object.assign(newToken, user);
       }
       if (trigger === 'update' && session) {
-        Object.assign(token, session.user);
-        token.picture = session.user.image;
+        Object.assign(newToken, session.user);
+        newToken.picture = session.user.image;
       }
       return token;
     },
-    session: async ({ session, token }) => {
-      session = { ...session, ...token };
-      return session;
-    },
   },
-  pages: {},
 });

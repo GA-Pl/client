@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { SelectInput } from './SelectInput';
 import { BaseInput } from './BaseInput';
 import { ActivityTypeSelector } from './ActiveTypeSelector';
@@ -64,42 +65,42 @@ export default function FormPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 my-24">
+    <div className={'container mx-auto px-4 my-24'}>
       <form
         onSubmit={handleSubmit}
-        className="space-y-6 bg-white p-6 rounded-lg shadow-md flex flex-col"
+        className={'space-y-6 bg-white p-6 rounded-lg shadow-md flex flex-col'}
       >
         <BaseInput
-          label="활동명"
-          id="activityName"
+          label={'활동명'}
+          id={'activityName'}
           value={activityName}
           onChange={setActivityName}
         />
         <SelectInput
-          label="연령 선택"
-          id="age"
+          label={'연령 선택'}
+          id={'age'}
           options={ageOptions}
           value={age}
           onChange={setAge}
         />
         <SelectInput
-          label="집단 규모 선택"
-          id="groupSize"
+          label={'집단 규모 선택'}
+          id={'groupSize'}
           options={groupSizeOptions}
           value={groupSize}
           onChange={setGroupSize}
         />
 
         <BaseInput
-          label="주제"
-          id="subject"
+          label={'주제'}
+          id={'subject'}
           value={subject}
           onChange={setSubject}
         />
         <ActivityTypeSelector value={activityType} onChange={setActivityType} />
         {goals.map((goal, index) => (
           <BaseInput
-            key={index}
+            key={uuidv4()}
             label={`활동 목표 ${index + 1}`}
             id={`goal-${index}`}
             value={goal}
@@ -108,24 +109,35 @@ export default function FormPage() {
         ))}
         {relatedElements.map((element, index) => (
           <BaseInput
-            key={index}
+            key={uuidv4()}
             label={`누리과정 관련 요소 ${index + 1}`}
             id={`element-${index}`}
             value={element}
             onChange={(value) => handleRelatedElementsChange(index, value)}
           />
         ))}
-        <label className="block text-sm font-medium text-gray-700">
-          활동 자료
+        <label
+          htmlFor={'activity-resource'}
+          className={'block text-sm font-medium text-gray-700'}
+        >
+          {'활동 자료'}
         </label>
         <input
-          type="file"
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
+          id={'activity-resource'}
+          type={'file'}
+          aria-label="활동 자료 파일 업로드"
+          aria-describedby={'file-upload-description'}
+          className={
+            'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary'
+          }
         />
+        <p id={'file-upload-description'} className={'text-sm text-gray-500'}>
+          {'업로드할 파일을 선택하세요.'}
+        </p>
         {contents.map((content, index) => (
-          <div key={index} className="flex flex-col">
+          <div key={uuidv4()} className={'flex flex-col'}>
             <BaseInput
-              label="소제목"
+              label={'소제목'}
               id={`subtitle-${index}`}
               value={content.subtitle}
               onChange={(value) =>
@@ -133,7 +145,7 @@ export default function FormPage() {
               }
             />
             <TextAreaInput
-              label="세부내용"
+              label={'세부내용'}
               id={`content-${index}`}
               value={content.content}
               onChange={(value) =>
@@ -142,26 +154,30 @@ export default function FormPage() {
             />
           </div>
         ))}
-        <div className="flex justify-center">
+        <div className={'flex justify-center'}>
           <button
-            type="button"
+            type={'button'}
             onClick={addContent}
-            className="flex justify-center items-center button-border py-2 px-4 bg-primary text-white text-lg rounded-full hover:bg-primary-dark button-effect hover:bg-white hover:text-primary w-12 h-12"
+            className={
+              'flex justify-center items-center button-border py-2 px-4 bg-primary text-white text-lg rounded-full hover:bg-primary-dark button-effect hover:bg-white hover:text-primary w-12 h-12'
+            }
           >
-            +
+            {'+'}
           </button>
         </div>
         <TextAreaInput
-          label="유의사항 및 평가"
-          id="notes"
+          label={'유의사항 및 평가'}
+          id={'notes'}
           value={notes}
           onChange={setNotes}
         />
         <button
-          type="submit"
-          className="button-border py-2 px-4 bg-primary text-white rounded hover:bg-white hover:text-primary"
+          type={'submit'}
+          className={
+            'button-border py-2 px-4 bg-primary text-white rounded hover:bg-white hover:text-primary'
+          }
         >
-          저장하기
+          {'저장하기'}
         </button>
       </form>
     </div>

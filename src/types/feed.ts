@@ -1,4 +1,4 @@
-export default interface IFeed {
+export interface IFeed {
   document_id: number;
   author_id: number;
   activity_plan: {
@@ -26,6 +26,6 @@ export default interface IFeed {
   created_dt: string;
 }
 
-export default interface IFeedData {
+export interface IFeedData {
   document_id: number;
 }
