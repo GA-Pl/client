@@ -12,7 +12,9 @@ export default function ErrorPage({
       }
     >
       <div className={'p-6 rounded-lg shadow-lg bg-white max-w-sm'}>
-        <h1 className={'text-3xl font-bold text-primary mb-2'}>에러 발생!</h1>
+        <h1 className={'text-3xl font-bold text-primary mb-2'}>
+          {'에러 발생!'}
+        </h1>
         <h2 className={'text-lg mb-4'}>
           {decodeURIComponent(message as string)}
         </h2>

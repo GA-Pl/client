@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { IFeed } from '@/types/feed';
 import ImageCarousel from './ImageCarousel';
 
@@ -76,6 +77,13 @@ export default function Feed({ feed }: FeedProps) {
             {'🔖 '}
             {feed.bookmark_count} {'Bookmarks'}
           </span>
+        </div>
+        <div className={'p-4 text-left'}>
+          <Link href={`/lessonDetail/${feed.document_id}`}>
+            <span className={'text-blue-500 text-sm underline'}>
+              {'더보기'}
+            </span>
+          </Link>
         </div>
       </div>
     </div>

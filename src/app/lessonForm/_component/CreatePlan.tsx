@@ -125,7 +125,7 @@ export default function FormPage() {
         <input
           id={'activity-resource'}
           type={'file'}
-          aria-label="활동 자료 파일 업로드"
+          aria-label={'활동 자료 파일 업로드'}
           aria-describedby={'file-upload-description'}
           className={
             'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary'

@@ -8,7 +8,6 @@ export default async function Home() {
           ' flex flex-col justify-center items-center z-10 w-full max-w-5xl text-sm lg:flex'
         }
       >
-        {/* <FeedList feeds={response.data ?? []} /> */}
         <FeedList />
       </div>
     </main>
