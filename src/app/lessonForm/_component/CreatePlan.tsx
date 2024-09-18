@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { SelectInput } from './SelectInput';
 import { BaseInput } from './BaseInput';
 import { ActivityTypeSelector } from './ActiveTypeSelector';
 import { TextAreaInput } from './TextAreaInput';
+import CurriculumToggle from './CurriculumToggle';
 
 export default function FormPage() {
   const [age, setAge] = useState('');
@@ -14,7 +14,6 @@ export default function FormPage() {
   const [subject, setSubject] = useState('');
   const [activityType, setActivityType] = useState('');
   const [goals, setGoals] = useState(['', '']);
-  const [relatedElements, setRelatedElements] = useState(['', '', '']);
   const [contents, setContents] = useState([{ subtitle: '', content: '' }]);
   const [notes, setNotes] = useState('');
 
@@ -34,12 +33,6 @@ export default function FormPage() {
     const newGoals = [...goals];
     newGoals[index] = value;
     setGoals(newGoals);
-  };
-
-  const handleRelatedElementsChange = (index: number, value: string) => {
-    const newElements = [...relatedElements];
-    newElements[index] = value;
-    setRelatedElements(newElements);
   };
 
   const handleContentsChange = (
@@ -65,7 +58,7 @@ export default function FormPage() {
   };
 
   return (
-    <div className={'container mx-auto px-4 my-24'}>
+    <div className={'container mx-auto px-4'}>
       <form
         onSubmit={handleSubmit}
         className={'space-y-6 bg-white p-6 rounded-lg shadow-md flex flex-col'}
@@ -100,22 +93,14 @@ export default function FormPage() {
         <ActivityTypeSelector value={activityType} onChange={setActivityType} />
         {goals.map((goal, index) => (
           <BaseInput
-            key={uuidv4()}
+            key={`${index + 1}`}
             label={`활동 목표 ${index + 1}`}
             id={`goal-${index}`}
             value={goal}
             onChange={(value) => handleGoalsChange(index, value)}
           />
         ))}
-        {relatedElements.map((element, index) => (
-          <BaseInput
-            key={uuidv4()}
-            label={`누리과정 관련 요소 ${index + 1}`}
-            id={`element-${index}`}
-            value={element}
-            onChange={(value) => handleRelatedElementsChange(index, value)}
-          />
-        ))}
+        <CurriculumToggle />
         <label
           htmlFor={'activity-resource'}
           className={'block text-sm font-medium text-gray-700'}
@@ -135,9 +120,9 @@ export default function FormPage() {
           {'업로드할 파일을 선택하세요.'}
         </p>
         {contents.map((content, index) => (
-          <div key={uuidv4()} className={'flex flex-col'}>
+          <div key={`${index + 1}`} className={'flex flex-col'}>
             <BaseInput
-              label={'소제목'}
+              label={`소제목 ${index + 1}`}
               id={`subtitle-${index}`}
               value={content.subtitle}
               onChange={(value) =>

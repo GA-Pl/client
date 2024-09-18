@@ -1,29 +1,28 @@
 import { MenuItemProps } from '@/types/menu';
 
-const MENU_ITEMS: MenuItemProps[] = [
+export const MENU_ITEMS: MenuItemProps[] = [
   {
     name: '홈',
     icon: '/icons/homeIcon.png',
     activeIcon: '/icons/homeIconPink.png',
     link: '/',
   },
-  // {
-  //   name: '검색',
-  //   icon: '/icons/searchIcon.png',
-  //   activeIcon: '/icons/searchIconPink.png',
-  //   link: '/search',
-  // },
-  {
-    name: '만들기',
-    icon: '/icons/plusIcon.png',
-    activeIcon: '/icons/plusIconPink.png',
-    link: '/lessonForm',
-  },
+
   {
     name: '알림',
     icon: '/icons/bellIcon.png',
     activeIcon: '/icons/bellIconPink.png',
     link: '/notifications',
+  },
+  {
+    name: '만들기',
+    icon: '/icons/plusIcon.png',
+    activeIcon: '/icons/plusIconPink.png',
+    subMenuItems: [
+      { name: 'AI 계획안 생성하기', link: '/ai' },
+      { name: '계획안 글쓰기', link: '/lessonForm' },
+      { name: '수업 사진 기록하기', link: '/record' },
+    ],
   },
   {
     name: '스크랩',
@@ -44,5 +43,3 @@ const MENU_ITEMS: MenuItemProps[] = [
     link: '/login',
   },
 ];
-
-export default MENU_ITEMS;

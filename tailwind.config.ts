@@ -14,6 +14,14 @@ const config: Config = {
     extend: {
       colors: {
         primary: '#ED4264',
+        primary100: '#fde8e8',
+        primary200: '#fbd1d1',
+        primary300: '#f9baba',
+        primary400: '#f7a4a4',
+        primary500: '#f58d8d',
+        primary600: '#f37676',
+        primary700: '#f15f5f',
+        primary800: '#ef4848',
         gray900: '#171923',
         gray800: '#1A202C',
         gray700: '#2D3748',

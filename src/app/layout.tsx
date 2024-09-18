@@ -25,9 +25,7 @@ export default function RootLayout({
         <AuthSession>
           <SideBar />
           <main
-            className={
-              'mt-20 tablet:mt-0 tablet:ml-0 laptop:ml-20 desktop:ml-52 flex-grow p-4'
-            }
+            className={'tablet:ml-0 laptop:ml-20 desktop:ml-52 flex-grow p-4'}
           >
             {children}
           </main>
