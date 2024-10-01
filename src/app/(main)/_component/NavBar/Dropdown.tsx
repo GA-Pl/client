@@ -1,8 +1,8 @@
 'use client';
 
+import { SubMenuItem } from '@/types/menu';
 import Link from 'next/link';
 import { useRef, useEffect, useState, ReactNode } from 'react';
-import { SubMenuItem } from '@/types/menu';
 
 interface DropdownProps {
   toggleComponent: ReactNode;
@@ -11,7 +11,6 @@ interface DropdownProps {
 const Dropdown = ({ toggleComponent, subMenuItems }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   useEffect(() => {
@@ -20,7 +19,6 @@ const Dropdown = ({ toggleComponent, subMenuItems }: DropdownProps) => {
         setIsOpen(false);
       }
     }
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -30,15 +28,7 @@ const Dropdown = ({ toggleComponent, subMenuItems }: DropdownProps) => {
   return (
     <div ref={ref} className={'relative'}>
       <div onClick={toggleDropdown}>{toggleComponent}</div>
-      <div
-        className={`absolute bg-white shadow-md z-10 bottom-full 
-                    w-52  // Dropdown width
-                    laptop:left-full laptop:top-0 
-                    tablet:bottom-full tablet:right-0
-                    transform transition-transform duration-300 ease-in-out
-                    ${isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'} // 애니메이션 효과
-                  `}
-      >
+      <div className={`absolute w-36 bg-white`}>
         {subMenuItems?.map((subItem) => (
           <Link
             key={subItem.name}

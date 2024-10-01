@@ -17,11 +17,16 @@
         "name": "next"
       }
     ],
-    "baseUrl": "src", // 'src' 폴더를 기준으로 경로 설정
     "paths": {
-      "@/*": ["./*"] // '@'로 시작하는 경로를 'src' 기준으로 매핑
+      "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "build/types/**/*.ts"
+  ],
   "exclude": ["node_modules"]
 }

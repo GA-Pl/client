@@ -16,7 +16,8 @@
     "plugin:import/warnings",
     "plugin:prettier/recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier"
+    "prettier",
+    "next/core-web-vitals"
   ],
   // [rules] 상세 규칙
   "rules": {
@@ -87,6 +88,10 @@
       "typescript": {
         "alwaysTryTypes": true,
         "project": "."
+      },
+      "alias": {
+        "map": [["@", "./components"]],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     }
   }

@@ -26,7 +26,7 @@ function FeedList() {
   }, []);
 
   return (
-    <div className={'mt-20'}>
+    <div>
       {feeds.map((feedData) => (
         <Feed key={feedData.document_id} feed={feedData} />
       ))}

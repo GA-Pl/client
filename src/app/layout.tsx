@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: 'GA:Pl',
   description: 'Generate Ai Planner',
   icons: {
-    icon: '/icons/gappler.svg',
+    icon: '/dog.png',
   },
 };
 
@@ -25,7 +25,9 @@ export default function RootLayout({
         <AuthSession>
           <SideBar />
           <main
-            className={'tablet:ml-0 laptop:ml-20 desktop:ml-52 flex-grow p-4'}
+            className={
+              'flex justify-center tablet:ml-0 laptop:ml-20 desktop:ml-36 flex-grow p-4 bg-slate-50'
+            }
           >
             {children}
           </main>

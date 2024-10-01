@@ -11,7 +11,7 @@ export default function SearchMenu({ handleSearchClick }: SearchMenuProps) {
     <div>
       <div
         className={
-          'p-4 flex items-center justify-start hover:bg-gray-200 hover:cursor-pointer desktop:w-44 laptop:w-16 sidebar-transition'
+          'p-4 flex items-center justify-start hover:bg-gray-200 hover:cursor-pointer desktop:w-32 laptop:w-16  h-14 sidebar-transition'
         }
         onClick={handleSearchClick}
       >
@@ -29,7 +29,7 @@ export default function SearchMenu({ handleSearchClick }: SearchMenuProps) {
         </div>
         <span
           className={
-            'ml-2 hidden tablet:hidden laptop:hidden desktop:block sidebar-transition'
+            'ml-2 hidden tablet:hidden laptop:hidden desktop:block text-sm sidebar-transition'
           }
         >
           {'검색'}

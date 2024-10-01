@@ -9,7 +9,6 @@ const FileDownloadSquare = ({ files }: FileDownloadSquareProps) => {
     const fileName = url.substring(url.lastIndexOf('/') + 1);
     return fileName.length > 10 ? `${fileName.substring(0, 10)}...` : fileName; // 10자 이상이면 절단
   };
-  console.log(files);
 
   return (
     <div className={'flex'}>

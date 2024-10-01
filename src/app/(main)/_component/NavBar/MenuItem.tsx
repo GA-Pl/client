@@ -25,7 +25,7 @@ const MenuItem = ({
       <Link
         href={link}
         className={
-          'p-4 flex items-center justify-start hover:bg-gray-200 desktop:w-44 laptop:w-16 sidebar-transition'
+          'p-4 mt-2 flex items-center justify-start hover:bg-gray-200 desktop:w-32 laptop:w-16 h-14 text-sm sidebar-transition'
         }
       >
         <div className={'relative flex items-center justify-center'}>
