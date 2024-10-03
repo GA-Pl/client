@@ -40,7 +40,7 @@ function RecommendList() {
   ];
   return (
     <div>
-      <h2 className="mt-8 mb-4 font-bold">{'🤖 이런 글은 어떠세요?'}</h2>
+      <h2 className={'mt-8 mb-4 font-bold'}>{'🤖 이런 글은 어떠세요?'}</h2>
       {data.map((item) => (
         <RecommendCard
           key={item.name}

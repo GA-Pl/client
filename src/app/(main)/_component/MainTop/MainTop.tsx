@@ -16,9 +16,9 @@ function MainTop() {
   ];
 
   return (
-    <div className="flex justify-around">
+    <div className={'flex justify-around'}>
       <SearchBar />
-      <div className="flex flex-col">
+      <div className={'flex flex-col'}>
         <CreateBtn onClick={toggleDropdown} />
         {isOpen && (
           <Dropdown toggleComponent={<div />} subMenuItems={subMenuItems} />

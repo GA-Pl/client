@@ -90,8 +90,8 @@
         "project": "."
       },
       "alias": {
-        "map": [["@", "./components"]],
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        "map": [["@", "./src"]],
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".json"]
       }
     }
   }

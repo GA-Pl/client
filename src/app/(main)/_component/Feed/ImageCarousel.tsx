@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -22,10 +23,12 @@ function ImageCarousel({ images }: ImageCarouselProps) {
 
   return (
     <div className={'relative w-full overflow-hidden'}>
-      <img
+      <Image
         src={images[currentIndex]}
         alt={`Slide ${currentIndex + 1}`}
         className={'w-full h-auto'}
+        width={500}
+        height={500}
       />
       <div
         className={

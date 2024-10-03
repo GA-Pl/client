@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, ChangeEvent } from 'react';
+import Image from 'next/image';
 
 const PhotoUpload = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -20,7 +21,9 @@ const PhotoUpload = () => {
         }
       >
         {selectedFile ? (
-          <img
+          <Image
+            width={100}
+            height={100}
             src={URL.createObjectURL(selectedFile)}
             alt={'Selected'}
             className={'object-cover w-full h-full'}
