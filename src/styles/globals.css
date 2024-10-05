@@ -38,4 +38,7 @@ body {
   .sidebar-transition {
     @apply transition-all duration-300 ease-in-out;
   }
+  .title-effect {
+    @apply border-l-4 border-l-slate-700 pl-4 text-xl text-slate-500;
+  }
 }

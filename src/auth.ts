@@ -48,10 +48,10 @@ export const {
           if (userInfo) {
             updatedUser.name = userInfo.name;
             updatedUser.image = userInfo.profileImg;
-            return true; // signIn 콜백 성공
+            return true;
           }
 
-          return false; // signIn 콜백 실패
+          return false;
         }
       }
       return true;

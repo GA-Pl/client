@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 interface BaseInputProps {
   label: string;
   id: string;
@@ -8,18 +10,26 @@ interface BaseInputProps {
 export const BaseInput = ({ label, id, value, onChange }: BaseInputProps) => {
   return (
     <div>
-      <label htmlFor={id} className={'block text-sm font-medium text-gray-700'}>
-        {label}
-      </label>
-      <input
-        type={'text'}
-        id={id}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className={
-          'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary'
-        }
-      />
+      <div className={'flex'}>
+        <div className={'flex items-center justify-center'}>
+          <Image
+            src={'/icons/triangle.png'}
+            width={20}
+            height={20}
+            alt={'triangle'}
+          />
+        </div>
+        <input
+          type={'text'}
+          id={id}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={label}
+          className={
+            'flex items-center justify-center mt-1 w-full px-3 py-2  focus:outline-none'
+          }
+        />
+      </div>
     </div>
   );
 };

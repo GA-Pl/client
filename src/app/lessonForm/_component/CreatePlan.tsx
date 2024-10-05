@@ -1,38 +1,68 @@
 'use client';
 
 import React, { useState } from 'react';
-import { SelectInput } from './SelectInput';
-import { BaseInput } from './BaseInput';
-import { ActivityTypeSelector } from './ActiveTypeSelector';
-import { TextAreaInput } from './TextAreaInput';
-import CurriculumToggle from './CurriculumToggle';
+import { category } from '@/_lib/constants/category';
+import { useCurriculumHandlers } from '@/_lib/hooks/useNurriCurriculum';
+import CategorySelect from './CategorySelect';
+import AgeSelect from './AgeSelect';
+import GroupSelect from './GroupSelect';
+import CurriculumSection from './CurriculumSection';
+import SubjectInputSection from './SubjectInputSelection';
+import ContentSection from './ContentSection';
+import GoalsSection from './GoalsSection';
+import PrecautionsSection from './PrecautionSection';
+import EvaluationsSection from './EvaluationSection';
+import FileUploadSection from './FileUploadSection';
 
 export default function FormPage() {
-  const [age, setAge] = useState('');
-  const [groupSize, setGroupSize] = useState('');
-  const [activityName, setActivityName] = useState('');
   const [subject, setSubject] = useState('');
-  const [activityType, setActivityType] = useState('');
+  const [detailSubject, setDetailSubject] = useState('');
   const [goals, setGoals] = useState(['', '']);
   const [contents, setContents] = useState([{ subtitle: '', content: '' }]);
-  const [notes, setNotes] = useState('');
+  const [precautions, setPrecautions] = useState(['']);
+  const [evaluations, setEvaluations] = useState(['']);
+  const initialState = [
+    { selectedNurri: '', selectedSubNurri: '', selectedCurriculum: '' },
+  ];
+  const {
+    curriculumComponents,
+    handleNurriClick,
+    handleSubNurriClick,
+    handleDetailClick,
+    addCurriculumComponent,
+    removeCurriculumComponent,
+  } = useCurriculumHandlers(initialState);
 
   const ageOptions = [
-    { label: '만 3세', value: '3' },
-    { label: '만 4세', value: '4' },
-    { label: '만 5세', value: '5' },
+    { label: '만 3세', value: '3', image: '/images/age/age3.png' },
+    { label: '만 4세', value: '4', image: '/images/age/age4.png' },
+    { label: '만 5세', value: '5', image: '/images/age/age5.png' },
   ];
 
   const groupSizeOptions = [
-    { label: '소집단', value: 'small' },
-    { label: '중집단', value: 'medium' },
-    { label: '대집단', value: 'large' },
+    { label: '소집단', value: 'small', image: '/images/group/small.png' },
+    { label: '중집단', value: 'medium', image: '/images/group/medium.png' },
+    { label: '대집단', value: 'large', image: '/images/group/large.png' },
   ];
 
-  const handleGoalsChange = (index: number, value: string) => {
-    const newGoals = [...goals];
-    newGoals[index] = value;
-    setGoals(newGoals);
+  const handleSubjectChange = (value: string) => {
+    setSubject(value);
+  };
+
+  const handleDetailSubjectChange = (value: string) => {
+    setDetailSubject(value);
+  };
+
+  const handleAgeSelect = (value: string) => {
+    console.log(`선택된 나이: 만 ${value}세`);
+  };
+
+  const handleGroupSelect = (value: string) => {
+    console.log(`선택된 집단: ${value}`);
+  };
+
+  const handleCategorySelect = (value: string) => {
+    console.log(`선택된 카테고리: ${value}`);
   };
 
   const handleContentsChange = (
@@ -58,103 +88,59 @@ export default function FormPage() {
   };
 
   return (
-    <div className={'container mx-auto px-4'}>
+    <div className={'container mx-auto'}>
       <form
         onSubmit={handleSubmit}
-        className={'space-y-6 bg-white p-6 rounded-lg shadow-md flex flex-col'}
+        className={
+          'space-y-6 bg-white p-6 rounded-lg shadow-md mt-2 flex flex-col'
+        }
       >
-        <BaseInput
-          label={'활동명'}
-          id={'activityName'}
-          value={activityName}
-          onChange={setActivityName}
-        />
-        <SelectInput
-          label={'연령 선택'}
-          id={'age'}
-          options={ageOptions}
-          value={age}
-          onChange={setAge}
-        />
-        <SelectInput
-          label={'집단 규모 선택'}
-          id={'groupSize'}
-          options={groupSizeOptions}
-          value={groupSize}
-          onChange={setGroupSize}
+        <div>
+          <input
+            type={'text'}
+            name={'title'}
+            className={'text-xl laptop:text-3xl focus:outline-none'}
+            placeholder={'활동명을 입력하세요 '}
+          />
+          <div className={'ml-2 p-2  w-1/12 '} />
+        </div>
+        <SubjectInputSection
+          subject={subject}
+          detailSubject={detailSubject}
+          onSubjectChange={handleSubjectChange}
+          onDetailSubjectChange={handleDetailSubjectChange}
         />
 
-        <BaseInput
-          label={'주제'}
-          id={'subject'}
-          value={subject}
-          onChange={setSubject}
+        <AgeSelect options={ageOptions} onSelect={handleAgeSelect} />
+        <GroupSelect options={groupSizeOptions} onSelect={handleGroupSelect} />
+        <CategorySelect options={category} onSelect={handleCategorySelect} />
+        <GoalsSection goals={goals} setGoals={setGoals} />
+        <CurriculumSection
+          curriculumComponents={curriculumComponents}
+          handleNurriClick={handleNurriClick}
+          handleSubNurriClick={handleSubNurriClick}
+          handleDetailClick={handleDetailClick}
+          removeCurriculumComponent={removeCurriculumComponent}
+          addCurriculumComponent={addCurriculumComponent}
+          canAddMore={curriculumComponents.length < 3}
         />
-        <ActivityTypeSelector value={activityType} onChange={setActivityType} />
-        {goals.map((goal, index) => (
-          <BaseInput
-            key={`${index + 1}`}
-            label={`활동 목표 ${index + 1}`}
-            id={`goal-${index}`}
-            value={goal}
-            onChange={(value) => handleGoalsChange(index, value)}
-          />
-        ))}
-        <CurriculumToggle />
-        <label
-          htmlFor={'activity-resource'}
-          className={'block text-sm font-medium text-gray-700'}
-        >
-          {'활동 자료'}
-        </label>
-        <input
+        <FileUploadSection
           id={'activity-resource'}
-          type={'file'}
-          aria-label={'활동 자료 파일 업로드'}
-          aria-describedby={'file-upload-description'}
-          className={
-            'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary'
-          }
+          label={'활동 자료'}
+          description={'업로드할 파일을 드롭하거나 클릭해서 선택하세요.'}
         />
-        <p id={'file-upload-description'} className={'text-sm text-gray-500'}>
-          {'업로드할 파일을 선택하세요.'}
-        </p>
-        {contents.map((content, index) => (
-          <div key={`${index + 1}`} className={'flex flex-col'}>
-            <BaseInput
-              label={`소제목 ${index + 1}`}
-              id={`subtitle-${index}`}
-              value={content.subtitle}
-              onChange={(value) =>
-                handleContentsChange(index, 'subtitle', value)
-              }
-            />
-            <TextAreaInput
-              label={'세부내용'}
-              id={`content-${index}`}
-              value={content.content}
-              onChange={(value) =>
-                handleContentsChange(index, 'content', value)
-              }
-            />
-          </div>
-        ))}
-        <div className={'flex justify-center'}>
-          <button
-            type={'button'}
-            onClick={addContent}
-            className={
-              'flex justify-center items-center button-border py-2 px-4 bg-primary text-white text-lg rounded-full hover:bg-primary-dark button-effect hover:bg-white hover:text-primary w-12 h-12'
-            }
-          >
-            {'+'}
-          </button>
-        </div>
-        <TextAreaInput
-          label={'유의사항 및 평가'}
-          id={'notes'}
-          value={notes}
-          onChange={setNotes}
+        <ContentSection
+          contents={contents}
+          handleContentsChange={handleContentsChange}
+          addContent={addContent}
+        />
+        <PrecautionsSection
+          precautions={precautions}
+          setPrecautions={setPrecautions}
+        />
+        <EvaluationsSection
+          evaluations={evaluations}
+          setEvaluations={setEvaluations}
         />
         <button
           type={'submit'}

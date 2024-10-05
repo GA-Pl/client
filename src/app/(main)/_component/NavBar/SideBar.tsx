@@ -60,7 +60,7 @@ export default function SideBar() {
 
   return (
     <>
-      <div className={'fixed top-0 desktop:hidden laptop:hidden '}>
+      <div className={'fixed top-0 desktop:hidden laptop:hidden'}>
         <div className={'flex justify-between w-dvw'}>
           <Link href={'/'} className={'m-4'}>
             <Image
@@ -76,7 +76,7 @@ export default function SideBar() {
       </div>
       <div
         className={
-          'flex bg-opacity-300 border-b border-gray-200 shadow-md fixed bottom-0 desktop:left-0 desktop:top-0 desktop:bottom-0 desktop:flex-col desktop:h-dvh desktop:w-36 laptop:w-20 laptop:flex-col laptop:items-center laptop:justify-start laptop:h-dvh tablet:fixed tablet:top-auto tablet:left-0 tablet:right-0 tablet:bottom-0 tablet: h-16 tablet:flex-row tablet:items-center tablet:justify-around sidebar-transition'
+          'flex bg-opacity-300 bg-white border-b border-gray-200 shadow-md fixed bottom-0 desktop:left-0 desktop:top-0 desktop:bottom-0 desktop:flex-col desktop:h-dvh desktop:w-36 laptop:w-20 laptop:flex-col laptop:items-center laptop:justify-start laptop:h-dvh tablet:fixed tablet:top-auto tablet:left-0 tablet:right-0 tablet:bottom-0 tablet: h-16 tablet:flex-row tablet:items-center tablet:justify-around sidebar-transition'
         }
       >
         <Link
@@ -105,7 +105,7 @@ export default function SideBar() {
         </Link>
         <div
           className={
-            'flex justify-around items-center border-t border-gray-100 shadow-md tablet:border-none tablet:shadow-none tablet:flex-row desktop:flex-col desktop:mt-16 laptop:mt-16 laptop:flex-col'
+            'flex w-96 justify-around items-center border-t border-gray-100 shadow-md tablet:border-none tablet:shadow-none tablet:flex-row desktop:flex-col desktop:mt-16 laptop:mt-16 laptop:flex-col'
           }
         >
           {filteredMenuItems.map((item) => (
