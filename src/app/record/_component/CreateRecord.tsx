@@ -1,3 +1,4 @@
+import ChooseCategory from './ChooseCategory';
 import PhotoUpload from './PhotoUpload';
 
 const CreateRecord = () => {
@@ -6,23 +7,7 @@ const CreateRecord = () => {
       <PhotoUpload />
       <form>
         <div className={'mb-3'}>
-          <label
-            htmlFor={'activityType'}
-            className={'block text-gray-700 text-sm font-bold mb-2'}
-          >
-            {'활동 유형'}
-          </label>
-          <select
-            name={'activityType'}
-            className={
-              'shadow border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-            }
-          >
-            <option value={''}>{'활동 선택...'}</option>
-            <option value={'drawing'}>{'그리기'}</option>
-            <option value={'reading'}>{'독서'}</option>
-            <option value={'exercise'}>{'운동'}</option>
-          </select>
+          <ChooseCategory />
         </div>
         <div className={'mb-3'}>
           <label

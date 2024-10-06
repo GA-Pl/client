@@ -1,47 +1,110 @@
 'use client';
 
-import React, { useState, ChangeEvent } from 'react';
+import React, { useCallback, useState } from 'react';
 import Image from 'next/image';
+import { useDropzone } from 'react-dropzone';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { v4 as uuidv4 } from 'uuid';
+
+interface PreviewFile extends File {
+  preview: string;
+}
 
 const PhotoUpload = () => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [files, setFiles] = useState<PreviewFile[]>([]);
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      setSelectedFile(event.target.files[0]);
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    const newFiles: PreviewFile[] = acceptedFiles.map((file) =>
+      Object.assign(file, {
+        preview: URL.createObjectURL(file),
+      }),
+    );
+    setFiles((prevFiles) => [
+      ...prevFiles,
+      ...newFiles.slice(0, 5 - prevFiles.length),
+    ]);
+  }, []);
+
+  const onDropRejected = useCallback((fileRejections: string | any[]) => {
+    if (fileRejections.length > 0) {
+      toast.error(`최대 5개의 파일만 업로드가 가능합니다!`);
     }
+  }, []);
+
+  const removeFile = (fileToRemove: PreviewFile) => {
+    setFiles((currentFiles) =>
+      currentFiles.filter((file) => file !== fileToRemove),
+    );
   };
 
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    onDropRejected,
+    accept: 'image/*' as any,
+    maxFiles: 5,
+    maxSize: 1048576,
+  });
+
   return (
-    <div className={'flex flex-col items-center mb-6'}>
-      <label
-        htmlFor={'photo-upload'}
+    <div className={'container mx-auto px-4'}>
+      <div
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...getRootProps()}
         className={
-          'w-64 h-64 border-2 border-dashed border-primary flex items-center justify-center text-red-500 cursor-pointer'
+          'flex flex-col w-72 p-4 bg-white border-2 border-dashed border-primary items-center justify-center text-primary cursor-pointer mb-4'
         }
       >
-        {selectedFile ? (
-          <Image
-            width={100}
-            height={100}
-            src={URL.createObjectURL(selectedFile)}
-            alt={'Selected'}
-            className={'object-cover w-full h-full'}
-          />
+        <input
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...getInputProps()}
+        />
+        {isDragActive ? (
+          <p>{'파일을 여기에 드랍해주세요! '}</p>
         ) : (
-          <div className={'text-center'}>
-            <span className={'text-2xl'}>{'+'}</span>
-            <p className={'text-sm'}>{'사진'}</p>
-          </div>
+          <p>{'이곳에 파일을 드랍하거나 클릭해주세요!'}</p>
         )}
-      </label>
-      <input
-        type={'file'}
-        id={'photo-upload'}
-        className={'hidden'}
-        accept={'image/*'}
-        onChange={handleFileChange}
-      />
+        <Image
+          src={'/icons/fileImport.png'}
+          width={32}
+          height={32}
+          alt={'fileImg'}
+          className={'mt-4'}
+        />
+        <div className={'mt-4 text-sm'}>{'(최대 5개)'}</div>
+        <div
+          className={
+            'grid grid-cols-3 border-t-2 border-t-primary200 gap-2 mt-4 pt-4'
+          }
+        >
+          {files.map((file, index) => (
+            <div key={uuidv4()} className={'relative'}>
+              <Image
+                src={file.preview}
+                alt={`Preview ${index + 1}`}
+                width={100}
+                height={100}
+                className={'object-contain'}
+                style={{
+                  width: '100px',
+                  height: '100px',
+                  objectFit: 'contain',
+                  objectPosition: 'center',
+                }}
+              />
+              <button
+                type={'button'}
+                onClick={() => removeFile(file)}
+                className={'absolute top-0 right-0 bg-red-500 text-white p-1'}
+              >
+                {'✕'}
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+      <ToastContainer />
+      {/* {files.length > 0 && <ImageSwiper files={files} />} */}
     </div>
   );
 };

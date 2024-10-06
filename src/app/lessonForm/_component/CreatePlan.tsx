@@ -13,11 +13,14 @@ import GoalsSection from './GoalsSection';
 import PrecautionsSection from './PrecautionSection';
 import EvaluationsSection from './EvaluationSection';
 import FileUploadSection from './FileUploadSection';
+import ToolSection from './ToolSection';
 
 export default function FormPage() {
   const [subject, setSubject] = useState('');
   const [detailSubject, setDetailSubject] = useState('');
   const [goals, setGoals] = useState(['', '']);
+  const [tools, setTools] = useState([{ id: '1', value: '' }]);
+
   const [contents, setContents] = useState([{ subtitle: '', content: '' }]);
   const [precautions, setPrecautions] = useState(['']);
   const [evaluations, setEvaluations] = useState(['']);
@@ -124,6 +127,7 @@ export default function FormPage() {
           addCurriculumComponent={addCurriculumComponent}
           canAddMore={curriculumComponents.length < 3}
         />
+        <ToolSection tools={tools} setTools={setTools} />
         <FileUploadSection
           id={'activity-resource'}
           label={'활동 자료'}

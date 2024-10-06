@@ -6,7 +6,6 @@ import MenuItem from './MenuItem';
 
 const ProfileIcon = () => {
   const { data: session, status } = useSession();
-
   if (status === 'loading') {
     return <div>{'Loading...'}</div>;
   }

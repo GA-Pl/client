@@ -22,8 +22,8 @@ const LoginPage = () => {
 
         <div className={'text-center mt-4 font-pretendard text-gray-600'}>
           <span className={'font-maple text-[#ED4264]'}>{'GA:Pl'}</span>
-          {'에서는'}
-          {'별도의 가입 절차 없이 '}
+          {' 에서는'}
+          {' 별도의 가입 절차 없이 '}
           <br />
           {'간편하게 네이버 로그인하세요!'}
         </div>
