@@ -40,9 +40,7 @@ const AgeSelect = ({ options, onSelect }: AgeSelectorProps) => {
                 alt={`만 ${option.value}세`}
                 className={'w-20 h-20 laptop:w-28 laptop:h-28'}
               />
-              <div className={'text-slate-700 text-xs laptop:text-base'}>
-                {option.label}
-              </div>
+              <div className={'text-slate-700 text-xs '}>{option.label}</div>
             </button>
           ))}
         </div>

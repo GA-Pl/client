@@ -2,12 +2,17 @@
 
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { MoonLoader } from 'react-spinners';
 import MenuItem from './MenuItem';
 
 const ProfileIcon = () => {
   const { data: session, status } = useSession();
   if (status === 'loading') {
-    return <div>{'Loading...'}</div>;
+    return (
+      <div className={'flex justify-center items-center mt-64'}>
+        <MoonLoader color={'#ED4264'} size={15} />
+      </div>
+    );
   }
 
   const isLoggedIn = status === 'authenticated';

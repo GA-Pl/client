@@ -20,7 +20,6 @@ export default function FormPage() {
   const [detailSubject, setDetailSubject] = useState('');
   const [goals, setGoals] = useState(['', '']);
   const [tools, setTools] = useState([{ id: '1', value: '' }]);
-
   const [contents, setContents] = useState([{ subtitle: '', content: '' }]);
   const [precautions, setPrecautions] = useState(['']);
   const [evaluations, setEvaluations] = useState(['']);
@@ -102,7 +101,7 @@ export default function FormPage() {
           <input
             type={'text'}
             name={'title'}
-            className={'text-xl laptop:text-3xl focus:outline-none'}
+            className={'text-xl laptop:text-3xl focus:outline-none w-full'}
             placeholder={'활동명을 입력하세요 '}
           />
           <div className={'ml-2 p-2  w-1/12 '} />

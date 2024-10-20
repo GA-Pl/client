@@ -2,6 +2,7 @@
 
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import { GridLoader } from 'react-spinners';
 
 const UserInfo = () => {
   const { data: session, status } = useSession();
@@ -12,7 +13,11 @@ const UserInfo = () => {
   };
 
   if (status === 'loading') {
-    return <div>{'Loading...'}</div>;
+    return (
+      <div className={'flex justify-center items-center mt-64'}>
+        <GridLoader color={'#ED4264'} size={15} />
+      </div>
+    );
   }
 
   const isLoggedIn = status === 'authenticated';

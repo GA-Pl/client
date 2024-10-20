@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const subMenuItems = [
   { name: 'AI 계획안 생성하기', link: '/ai' },
@@ -10,6 +11,11 @@ const subMenuItems = [
 const CreatePlusBtn = () => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     function handleOutsideClick(event: MouseEvent) {
@@ -26,6 +32,10 @@ const CreatePlusBtn = () => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, []);
+
+  if (pathname === '/ai') {
+    return null;
+  }
 
   return (
     <div className={'laptop:mt-4 laptop:mb-4 relative'} ref={containerRef}>
@@ -45,10 +55,12 @@ const CreatePlusBtn = () => {
           }
         >
           {subMenuItems.map((item) => (
-            <Link key={item.name} href={item.link}>
-              <div className={'block px-4 py-2 hover:bg-gray-100'}>
-                {item.name}
-              </div>
+            <Link
+              key={item.name}
+              href={item.link}
+              className={'block px-4 py-2 hover:bg-gray-100'}
+            >
+              {item.name}
             </Link>
           ))}
         </div>
