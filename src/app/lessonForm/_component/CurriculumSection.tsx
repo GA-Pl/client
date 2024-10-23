@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { v4 as uuidv4 } from 'uuid';
 import CurriculumToggle from './CurriculumToggle';
 
 interface CurriculumSectionProps {
@@ -30,7 +31,7 @@ const CurriculumSection = ({
         <h1 className={'title-effect'}>{'누리과정 관련요소'}</h1>
       </div>
       {curriculumComponents.map((component, index) => (
-        <div key={component}>
+        <div key={uuidv4()}>
           <div
             className={
               'flex justify-between text-lg text-slate-400 border-b mt-6'

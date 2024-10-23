@@ -69,7 +69,6 @@ const BasicQuestion = ({
   const currentKey = questionKeys[currentStep - 1] as keyof Options;
   const currentOptions = options[currentKey];
   const hasImages = currentOptions.some((option: Option) => option.image);
-  console.log('hasImages', hasImages);
 
   const areAllQuestionsAnswered =
     questionKeys.length === Object.keys(answers).length + 1;

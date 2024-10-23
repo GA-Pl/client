@@ -7,7 +7,7 @@ const GridLoader = dynamic(() => import('react-spinners/GridLoader'), {
 
 const Loader = () => {
   return (
-    <div className={'flex justify-center items-center mt-64'}>
+    <div className={'flex justify-center items-center mt-32'}>
       <GridLoader color={'#ED4264'} size={15} />
     </div>
   );

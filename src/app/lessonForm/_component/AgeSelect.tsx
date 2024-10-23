@@ -1,25 +1,19 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React from 'react';
 
 interface AgeOptionProps {
   label: string;
-  value: string;
+  value: number;
   image: string;
 }
 
 interface AgeSelectorProps {
   options: AgeOptionProps[];
-  onSelect: (value: string) => void;
+  selectedAge: number;
+  onSelect: (value: number) => void;
 }
 
-const AgeSelect = ({ options, onSelect }: AgeSelectorProps) => {
-  const [selectedValue, setSelectedValue] = useState<string | null>('3');
-
-  const handleAgeClick = (value: string) => {
-    onSelect(value);
-    setSelectedValue(value);
-  };
-
+const AgeSelect = ({ options, onSelect, selectedAge }: AgeSelectorProps) => {
   return (
     <>
       <h1 className={'title-effect'}>{'연령 선택'}</h1>
@@ -29,9 +23,9 @@ const AgeSelect = ({ options, onSelect }: AgeSelectorProps) => {
             <button
               type={'button'}
               key={option.value}
-              onClick={() => handleAgeClick(option.value)}
+              onClick={() => onSelect(option.value)}
               className={`focus:outline-none bg-transparent border-4 transition duration-300 ease-in-out 
-                         ${option.value === selectedValue ? 'border-primary300' : 'hover:border-gray-300 border-transparent'}`}
+                         ${option.value === selectedAge ? 'border-primary300' : 'hover:border-gray-300 border-transparent'}`}
             >
               <Image
                 width={100}

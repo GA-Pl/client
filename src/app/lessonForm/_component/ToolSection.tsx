@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { useEffect, useRef, useState } from 'react';
 import { ToolInput } from './ToolInput';
 
 interface Tool {
@@ -12,10 +13,17 @@ interface ToolSectionProps {
 }
 
 const ToolSection = ({ tools, setTools }: ToolSectionProps) => {
+  const [isAdding, setIsAdding] = useState(false);
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
   const addTool = () => {
-    if (tools.length < 10) {
-      const newTool = { id: uuidv4(), value: '' };
-      setTools([...tools, newTool]);
+    if (tools.length < 10 && !isAdding) {
+      setIsAdding(true);
+      setTimeout(() => {
+        const newTool = { id: uuidv4(), value: '' };
+        setTools((prevTools) => [...prevTools, newTool]);
+        setIsAdding(false);
+      }, 50);
     }
   };
 
@@ -34,6 +42,13 @@ const ToolSection = ({ tools, setTools }: ToolSectionProps) => {
     setTools(newTools);
   };
 
+  useEffect(() => {
+    const lastInput = inputRefs.current[tools.length - 1];
+    if (lastInput) {
+      lastInput.focus();
+    }
+  }, [tools.length]);
+
   return (
     <>
       <h1 className={'title-effect'}>{'활동 도구'}</h1>
@@ -46,6 +61,10 @@ const ToolSection = ({ tools, setTools }: ToolSectionProps) => {
               id={tool.id}
               value={tool.value}
               onChange={(value) => handleToolChange(tool.id, value)}
+              onEnterPress={addTool}
+              inputRef={(el: HTMLInputElement | null) => {
+                inputRefs.current[index] = el;
+              }}
             />
             {tools.length !== 1 && (
               <button

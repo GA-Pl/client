@@ -1,25 +1,51 @@
+import { v4 as uuidv4 } from 'uuid';
+import React, { useEffect, useRef, useState } from 'react';
 import { InputText } from './InputText';
 
+interface Evaluation {
+  id: string;
+  text: string;
+}
+
 interface EvaluationsSectionProps {
-  evaluations: string[];
-  setEvaluations: React.Dispatch<React.SetStateAction<string[]>>;
+  evaluations: Evaluation[];
+  setEvaluations: React.Dispatch<React.SetStateAction<Evaluation[]>>;
 }
 
 const EvaluationsSection = ({
   evaluations,
   setEvaluations,
 }: EvaluationsSectionProps) => {
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [isAdding, setIsAdding] = useState(false);
+
   const addEvaluation = () => {
-    if (evaluations.length < 3) {
-      setEvaluations([...evaluations, '']);
+    if (evaluations.length < 3 && !isAdding) {
+      setIsAdding(true);
+      setTimeout(() => {
+        setEvaluations((prevEvaluations) => [
+          ...prevEvaluations,
+          { id: uuidv4(), text: '' },
+        ]);
+        setIsAdding(false);
+      }, 50);
     }
   };
 
-  const handleEvaluationChange = (index: number, value: string) => {
-    const newEvaluations = [...evaluations];
-    newEvaluations[index] = value;
-    setEvaluations(newEvaluations);
+  const handleEvaluationChange = (id: string, value: string) => {
+    setEvaluations((prevEvaluations) =>
+      prevEvaluations.map((evaluation) =>
+        evaluation.id === id ? { ...evaluation, text: value } : evaluation,
+      ),
+    );
   };
+
+  useEffect(() => {
+    const lastInput = inputRefs.current[evaluations.length - 1];
+    if (lastInput) {
+      lastInput.focus();
+    }
+  }, [evaluations.length]);
 
   return (
     <>
@@ -27,11 +53,14 @@ const EvaluationsSection = ({
       <div>
         {evaluations.map((evaluation, index) => (
           <InputText
-            key={evaluation}
-            label={`평가 ${index + 1}`}
+            key={evaluation.id}
             id={`${index + 1}`}
-            value={evaluation}
-            onChange={(value) => handleEvaluationChange(index, value)}
+            value={evaluation.text}
+            onChange={(value) => handleEvaluationChange(evaluation.id, value)}
+            onEnterPress={addEvaluation}
+            inputRef={(el: HTMLInputElement | null) => {
+              inputRefs.current[index] = el;
+            }}
           />
         ))}
         {evaluations.length < 3 && (

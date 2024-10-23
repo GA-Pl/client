@@ -12,7 +12,7 @@ const SubjectInputSection = ({
   onDetailSubjectChange,
 }: SubjectInputSectionProps) => {
   return (
-    <div className={'flex flex-col laptop:flex-row'}>
+    <div className={'flex flex-col laptop:flex-row w-100'}>
       <input
         placeholder={'주제'}
         name={'subject'}

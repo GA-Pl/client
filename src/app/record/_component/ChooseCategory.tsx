@@ -10,5 +10,11 @@ export default function ChooseCategory() {
     setSelectCategory(value);
     console.log(`선택된 카테고리: ${selectCategory}`);
   };
-  return <CategorySelect options={category} onSelect={handleCategorySelect} />;
+  return (
+    <CategorySelect
+      options={category}
+      onSelect={handleCategorySelect}
+      selectedActivityType={''}
+    />
+  );
 }
