@@ -2,48 +2,42 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { auth } from './auth';
 
-const protectedRoutes = [
-  '/record',
-  '/notification',
-  '/scraps',
-  '/settings',
-  '/lessonForm',
-];
-
-const authRoutes = ['/login', '/signup', '/signin'];
+// const protectedRoutes = [
+//   '/record',
+//   '/notification',
+//   '/scraps',
+//   '/settings',
+//   '/lessonForm',
+// ];
 
 export async function middleware(request: NextRequest) {
-  const session = await auth();
+  const session = await auth(); // 세션 확인
   const { pathname } = request.nextUrl;
 
-  if (pathname.startsWith('/api/')) {
-    const token = request.headers.get('Authorization');
-    if (!token) {
-      return NextResponse.json(
-        { message: 'Authorization token is required' },
-        { status: 401 },
-      );
-    }
+  if (!session && pathname === '/') {
+    return NextResponse.redirect(new URL('/login', request.url)); // 로그인 페이지로 리다이렉트
   }
 
-  if (isMatch(pathname, protectedRoutes)) {
-    return session
-      ? NextResponse.next()
-      : NextResponse.redirect(new URL('/login', request.url)); // 세션이 없으면 로그인 페이지로 리다이렉트
+  if (
+    !session &&
+    !pathname.startsWith('/login') &&
+    !pathname.startsWith('/signup') &&
+    !pathname.startsWith('/signin')
+  ) {
+    return NextResponse.redirect(new URL('/login', request.url)); // 로그인 페이지로 리다이렉트
   }
 
-  if (isMatch(pathname, authRoutes)) {
-    return session
-      ? NextResponse.redirect(new URL('/', request.url)) // 이미 로그인된 사용자는 홈으로 리다이렉트
-      : NextResponse.next();
+  // 로그인한 경우, 로그인 페이지는 홈으로 리다이렉트
+  if (
+    session &&
+    (pathname.startsWith('/login') ||
+      pathname.startsWith('/signup') ||
+      pathname.startsWith('/signin'))
+  ) {
+    return NextResponse.redirect(new URL('/', request.url)); // 홈 페이지로 리다이렉트
   }
 
   return NextResponse.next();
-}
-
-// 경로 일치 확인 함수
-function isMatch(pathname: string, urls: string[]) {
-  return urls.some((url) => pathname.startsWith(url)); // 간단한 경로 일치 확인
 }
 
 // 미들웨어가 적용될 경로 설정
@@ -57,5 +51,6 @@ export const config = {
     '/login',
     '/signup',
     '/signin',
+    '/', // 메인 페이지도 포함
   ],
 };
