@@ -1,5 +1,3 @@
-import { BASE_NEXT_URL } from '@/_lib/utils/config';
-
 export async function getPlanners(id: string, token: string) {
   const headers = {
     'Content-Type': 'application/json',
@@ -7,12 +5,9 @@ export async function getPlanners(id: string, token: string) {
   };
 
   try {
-    const res = await fetch(
-      `${BASE_NEXT_URL}/api/document/lessonDetail/${id}`,
-      {
-        headers,
-      },
-    );
+    const res = await fetch(`/api/document/lessonDetail/${id}`, {
+      headers,
+    });
 
     if (!res.ok) {
       throw new Error('Failed to fetch Planners');

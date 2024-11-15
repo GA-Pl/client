@@ -1,12 +1,10 @@
-import { BASE_NEXT_URL } from '@/_lib/utils/config';
-
 export async function getFeeds(token: string) {
   const headers = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`,
   };
   try {
-    const res = await fetch(`${BASE_NEXT_URL}/api/feed`, {
+    const res = await fetch(`/api/feed`, {
       headers,
     });
 
