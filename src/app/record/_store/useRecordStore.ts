@@ -9,6 +9,7 @@ interface RecordStoreState {
   setCategory: (category: string) => void;
   setSubject: (subject: string) => void;
   setContent: (content: string) => void;
+  reset: () => void;
 }
 
 export const useRecordStore = create<RecordStoreState>((set) => ({
@@ -20,4 +21,6 @@ export const useRecordStore = create<RecordStoreState>((set) => ({
   setCategory: (category) => set({ category }),
   setSubject: (subject) => set({ subject }),
   setContent: (content) => set({ content }),
+  reset: () =>
+    set({ attachmentId: null, category: '', subject: '', content: '' }),
 }));

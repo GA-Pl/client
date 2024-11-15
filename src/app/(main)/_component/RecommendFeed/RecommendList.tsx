@@ -3,52 +3,57 @@ import RecommendCard from './RecommendCard';
 function RecommendList() {
   const data = [
     {
-      profileImg: '/images/gappler.png',
-      name: 'MIKIO',
-      title: '우주선 놀이 후기',
-      sentence: '저희반 유아들이 가장 관심 많아하는 우주선 놀이 공유..',
+      profileImg:
+        'https://store.kyobobook.co.kr/_next/image?url=https%3A%2F%2Fcontents.kyobobook.co.kr%2Fsih%2Ffit-in%2F144x222%2Fpdt%2F9791158364953.jpg&w=282&q=80',
+      link: 'https://product.kyobobook.co.kr/detail/S000214608467',
+      title: '산타 할아버지의 첫 크리스마스',
+      sentence: '맥 바넷 · 책읽는곰 2024.10.25',
       like: 45,
     },
     {
-      profileImg: '/images/우사기.webp',
-      name: 'KIOMI',
-      title: '타코야키를 좋아합니다.',
-      sentence: '역할놀이 영역에 타코야끼 장난감을 두었더니..',
+      profileImg:
+        'https://store.kyobobook.co.kr/_next/image?url=https%3A%2F%2Fcontents.kyobobook.co.kr%2Fsih%2Ffit-in%2F144x222%2Fpdt%2F9788954602792.jpg&w=282&q=80',
+      link: 'https://product.kyobobook.co.kr/detail/S000000776976',
+      title: '천둥 꼬마 선녀 번개 꼬마 선녀',
+      sentence: '한강 · 문학동네 2014.09.26',
       like: 40,
     },
     {
-      profileImg: '/images/쿠리만쥬.webp',
-      name: '정은',
-      title: '유아교육은 즐겁습니다.',
-      sentence: '컴공과는 다른 매력입니다. 유교를 위한 웹이라니..',
+      profileImg:
+        'https://store.kyobobook.co.kr/_next/image?url=https%3A%2F%2Fcontents.kyobobook.co.kr%2Fsih%2Ffit-in%2F144x222%2Fpdt%2F9791158364519.jpg&w=282&q=80',
+      link: 'https://product.kyobobook.co.kr/detail/S000212461447',
+      title: '감정 호텔',
+      sentence: '리디아 브란코비치 · 책읽는곰 2024.02.23',
       like: 38,
     },
     {
-      profileImg: '/images/치이카와.webp',
-      name: '혀니',
-      title: '가을 맞이 새 노래 배우기',
-      sentence: '요즘 우리반 유아들이 도토리랑 다람쥐에 관심이..',
+      profileImg:
+        'https://store.kyobobook.co.kr/_next/image?url=https%3A%2F%2Fcontents.kyobobook.co.kr%2Fsih%2Ffit-in%2F144x222%2Fpdt%2F9791193506721.jpg&w=282&q=80',
+      link: 'https://product.kyobobook.co.kr/detail/S000214014924',
+      title: '소나기',
+      sentence: '피도크 · 포레스트북스 2024.08.14',
       like: 32,
     },
     {
-      profileImg: '/images/하치와레.webp',
-      name: '가니',
-      title: '후속 활동으로 잘 유도하는법!',
-      sentence: '열혈 초임교사가 알려드립니다~~~',
+      profileImg:
+        'https://store.kyobobook.co.kr/_next/image?url=https%3A%2F%2Fcontents.kyobobook.co.kr%2Fsih%2Ffit-in%2F144x222%2Fpdt%2F8809264181515.jpg&w=282&q=80',
+      link: 'https://product.kyobobook.co.kr/detail/S000000348808',
+      title: '호두까기 인형',
+      sentence: '피오나 와트 · 어스본코리아 2020.11.05',
       like: 27,
     },
   ];
   return (
     <div>
-      <h2 className={'mt-8 mb-4 font-bold'}>{'🤖 이런 글은 어떠세요?'}</h2>
+      <h2 className={'mt-8 mb-4 font-bold'}>{'📚 이런 동화책은 어떠세요'}</h2>
       {data.map((item) => (
         <RecommendCard
-          key={item.name}
+          key={item.title}
           profileImg={item.profileImg}
-          name={item.name}
           title={item.title}
           sentence={item.sentence}
           like={item.like}
+          link={item.link}
         />
       ))}
     </div>

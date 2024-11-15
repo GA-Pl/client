@@ -10,7 +10,7 @@ import Loader from './Loader';
 import FollowButton from './FollowButton';
 
 interface UserInfoProps {
-  userInfo: IProfileData;
+  userInfo: IProfileData | null;
   updateUserInfo: (
     data: PutProfileParams,
     callbacks: { onSuccess?: () => void; onError?: (error: any) => void },
@@ -20,6 +20,7 @@ interface UserInfoProps {
   isError: boolean;
   error: any;
 }
+
 const UserInfo = ({
   userInfo,
   updateUserInfo,
@@ -34,13 +35,20 @@ const UserInfo = ({
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
 
+  // 로딩 중 상태 처리
   if (status === 'loading' || isLoading) {
     return <Loader />;
   }
 
+  // 인증되지 않은 상태 또는 API 에러 처리
   if (status !== 'authenticated' || isError) {
-    console.error('Authentication error:', error);
-    return null;
+    console.error('Authentication or data fetching error:', error);
+    return <div>{'사용자 정보를 불러올 수 없습니다.'}</div>;
+  }
+
+  // userInfo가 비어있을 때 처리
+  if (!userInfo) {
+    return <div>{'사용자 정보가 없습니다.'}</div>;
   }
 
   return (
@@ -51,7 +59,7 @@ const UserInfo = ({
     >
       <div className={'relative w-36 h-36 rounded-full'}>
         <Image
-          src={userInfo.profileImg || '/images/gappler.png'}
+          src={userInfo.profileImg || '/images/gappler.png'} // 안전한 기본값 처리
           alt={'Profile'}
           width={150}
           height={150}
@@ -66,7 +74,7 @@ const UserInfo = ({
       </div>
       <div className={'flex flex-col laptop:ml-8'}>
         <h1 className={'text-xl font-semibold text-slate-800'}>
-          {userInfo.nickname}
+          {userInfo.nickname || '닉네임 없음'}
         </h1>
         <div className={'text-sm text-slate-500'}>
           {userInfo.level || 'Level Info'}

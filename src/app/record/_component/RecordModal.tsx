@@ -9,6 +9,7 @@ import ChooseCategory from './ChooseCategory';
 import DetailsForm from './DetailsForm';
 import { useRecordStore } from '../_store/useRecordStore';
 import postRecord from '../_lib/postRecord';
+import { usePhotoStore } from '../_store/usePhotoStore';
 
 export default function RecordModal() {
   const { data: session } = useSession();
@@ -42,7 +43,7 @@ export default function RecordModal() {
     if (token && attachmentId && category) {
       try {
         const postData = {
-          attachmentId,
+          imageId: attachmentId,
           activity_type: category,
           subject,
           content,
@@ -52,7 +53,10 @@ export default function RecordModal() {
         console.log('Record Posted:', response);
         setIsLoading(false);
         toast.success('기록이 성공적으로 저장되었습니다!');
-        router.replace('/');
+        useRecordStore.getState().reset();
+        usePhotoStore.getState().reset();
+
+        router.back();
       } catch (error) {
         console.error('Error posting record:', error);
         toast.error('기록 저장에 실패했습니다. 다시 시도해주세요');

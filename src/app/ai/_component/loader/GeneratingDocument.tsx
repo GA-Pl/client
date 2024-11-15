@@ -5,7 +5,7 @@ const GeneratingSubject = () => {
   return (
     <motion.div
       className={
-        'fixed inset-0 bg-purple-800 bg-opacity-70 flex flex-col items-center justify-center z-50'
+        'fixed inset-0 bg-primary bg-opacity-70 flex flex-col items-center justify-center z-50'
       }
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

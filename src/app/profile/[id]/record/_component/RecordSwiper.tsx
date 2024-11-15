@@ -13,13 +13,20 @@ interface RecordSwiperProps {
 }
 
 const RecordSwiper = ({ images }: RecordSwiperProps) => {
+  const enableLoop = images.length > 1; // 이미지가 2개 이상일 때만 loop 활성화
+
   return (
     <Swiper
       cssMode
       navigation
-      pagination
+      pagination={{
+        clickable: true,
+        renderBullet: (index, className) =>
+          `<span class="${className}" style="background-color: #ED4264;"></span>`,
+      }}
       mousewheel
       keyboard
+      loop={enableLoop} // loop 활성화 조건 적용
       modules={[Navigation, Pagination, Mousewheel, Keyboard]}
       className={'mySwiper'}
       style={{ objectFit: 'contain' }}
@@ -28,7 +35,7 @@ const RecordSwiper = ({ images }: RecordSwiperProps) => {
         <SwiperSlide key={uuidv4()}>
           <div
             className={
-              'flex justify-center items-center h-72 w-72 mr-auto ml-auto'
+              'flex justify-center items-center h-72 w-72 laptop:w-[30rem] laptop:h-[30rem] mr-auto ml-auto shadow-md bg-white'
             }
           >
             <Image src={img} width={640} height={360} alt={'Record image'} />

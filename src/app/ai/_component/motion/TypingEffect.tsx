@@ -16,7 +16,7 @@ const TypingEffect = React.memo(({ text = '' }: TypingEffectProps) => {
 
   return (
     <motion.div
-      className={'inline-block'}
+      className={'inline-block my-4'}
       style={{ whiteSpace: 'pre-wrap', wordBreak: 'keep-all' }}
       initial={'hidden'}
     >

@@ -1,17 +1,18 @@
 'use client';
 
+import React from 'react';
 import Image from 'next/image';
-import { IFeed } from '@/types/feed';
-import ActionButtons from '@/_component/Item/ActionButtons';
 import CustomItem from '@/_component/Item/CustomItem';
+import ActionButtons from '@/_component/Item/ActionButtons';
+import { IFeed } from '@/types/feed';
 import formatRelativeTime from '@/app/(main)/_lib/formatRelativeTime';
 import RecordSwiper from '../../record/_component/RecordSwiper';
 
-interface PlanProps {
+interface RecordItemProps {
   data: IFeed | null;
 }
 
-const PlanItem = ({ data }: PlanProps) => {
+const PlanItem = ({ data }: RecordItemProps) => {
   if (!data) return null;
 
   return (
@@ -63,7 +64,10 @@ const PlanItem = ({ data }: PlanProps) => {
               {data.subject}
             </span>
           </div>
-          <RecordSwiper images={data.images} />
+          {/* RecordSwiper 조건부 렌더링 */}
+          {data.images && data.images.length > 0 && (
+            <RecordSwiper images={data.images} />
+          )}
           <ul className={'px-4 py-2'}>
             {data.content_subtitles?.map((subtitle, index) => (
               <li

@@ -29,6 +29,37 @@ body {
   object-fit: cover;
 }
 
+.mySwiper .swiper-button-next,
+.mySwiper .swiper-button-prev {
+  color: #ed4264;
+  opacity: 50%;
+  transition: transform 0.2s ease-in-out; /* 호버 시 애니메이션 */
+}
+
+.mySwiper .swiper-button-next:hover,
+.mySwiper .swiper-button-prev:hover {
+  transform: scale(1.1); /* 호버 시 확대 효과 */
+  opacity: 100%;
+}
+
+.mySwiper .swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  background-color: #ed4264;
+  opacity: 1;
+}
+
+.mySwiper .swiper-pagination-bullet-active {
+  background-color: #fde8e8; /* 활성화된 색상 */
+}
+
+@media (max-width: 600px) {
+  .mySwiper .swiper-button-next,
+  .mySwiper .swiper-button-prev {
+    display: none;
+  }
+}
+
 @font-face {
   font-family: 'Pretendard';
   src: url('/fonts/PretendardVariable.woff2') format('woff2');

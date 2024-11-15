@@ -1,29 +1,36 @@
+'use client';
+
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 interface RecommendCardProps {
   profileImg: string;
-  name: string;
   title: string;
   sentence: string;
   like: number;
+  link: string; // 외부 링크
 }
 
 function RecommendCard({
   profileImg,
-  name,
   title,
   sentence,
   like,
+  link,
 }: RecommendCardProps) {
   return (
-    <div
+    <motion.a
+      href={link}
+      target="_blank"
+      rel="noopener noreferrer"
       className={
-        'bg-white p-4 shadow rounded-lg mb-4 flex items-center space-x-4'
+        'block bg-white p-4 shadow rounded-lg mb-4 items-center space-x-4 transition-transform duration-300 transform hover:scale-105 hover:shadow-lg'
       }
+      whileHover={{ scale: 1.05 }}
     >
       <Image
         src={profileImg}
-        alt={name}
+        alt={'그림'}
         className={'w-10 h-10 rounded-full'}
         width={100}
         height={100}
@@ -36,7 +43,7 @@ function RecommendCard({
         {'👍 '}
         {like}
       </div>
-    </div>
+    </motion.a>
   );
 }
 

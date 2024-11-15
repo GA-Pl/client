@@ -82,15 +82,6 @@ const FollowList = ({ userInfo, follow, following }: FollowListProps) => {
                 </h4>
                 <p>{person.selfIntro}</p>
               </div>
-
-              <button
-                type={'button'}
-                className={
-                  'bg-primary100 text-primary rounded-full hover:bg-primary hover:text-white transition-colors duration-300 py-2 text-xs'
-                }
-              >
-                {'팔로우'}
-              </button>
             </Link>
           ))
         ) : (

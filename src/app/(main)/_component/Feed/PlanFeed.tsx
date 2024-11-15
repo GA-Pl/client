@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import Image from 'next/image';
 import { IFeed } from '@/types/feed';
-import ImageCarousel from './ImageCarousel';
+import RecordSwiper from '@/app/profile/[id]/record/_component/RecordSwiper';
 
 interface PlanProps {
   plan: IFeed;
@@ -46,7 +46,7 @@ const PlanFeed = ({ plan }: PlanProps) => {
       </div>
       {plan.images && plan.images.length > 0 && (
         <div className={'px-4 py-0 border-t z-10'}>
-          <ImageCarousel images={plan.images} />
+          <RecordSwiper images={plan.images} />
         </div>
       )}
       <div className={'flex items-center py-1 pl-4 mt-2'}>

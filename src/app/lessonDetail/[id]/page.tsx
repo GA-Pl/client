@@ -1,27 +1,47 @@
-import { auth } from '@/auth';
+'use client';
+
+import { useQuery } from '@tanstack/react-query';
+import { useSession } from 'next-auth/react';
+import Loader from '@/app/ai/_component/loader/Loader';
 import CommentSection from './_component/commentSection/CommentSection';
 import LessonDetails from './_component/lessonDetails/LessonDetails';
 import { getPlanners } from '../_lib/getPlanners';
 import Profile from './_component/profileSection/Profile';
 import ButtonSection from './_component/buttonSection/ButtonSection';
 
-interface Session {
-  accessToken: string;
-}
+export default function LessonPage({ params }: { params: { id: string } }) {
+  const { data: session, status } = useSession();
 
-export default async function LessonPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const session: Session | null = await auth();
+  const {
+    data: planner,
+    error,
+    isLoading,
+  } = useQuery(
+    ['planner', params.id],
+    () => getPlanners(params.id, session?.accessToken || ''),
+    {
+      enabled: status === 'authenticated',
+      retry: 2,
+    },
+  );
 
-  if (!session) {
-    console.error('No session available, user might not be logged in');
+  if (status === 'unauthenticated') {
     return <div>{'유저 정보가 존재하지 않습니다'}</div>;
   }
 
-  const planner = await getPlanners(params.id, session.accessToken);
+  if (isLoading) {
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
+  }
+
+  if (error || !planner || !planner.data) {
+    return (
+      <div>{'계획안 정보를 불러오는 데 실패했습니다. 다시 시도해주세요.'}</div>
+    );
+  }
 
   return (
     <div className={'container mx-auto desktop:px-28 h-dvh]'}>
@@ -43,7 +63,7 @@ export default async function LessonPage({
             bookmarked={planner.data.class_plan.bookmarked}
             bookmarkCount={planner.data.class_plan.bookmark_count}
             postId={planner.data.document_id}
-            accessToken={session.accessToken}
+            accessToken={session?.accessToken || ''}
           />
         </div>
       </div>
@@ -55,12 +75,12 @@ export default async function LessonPage({
           bookmarked={planner.data.class_plan.bookmarked}
           bookmarkCount={planner.data.class_plan.bookmark_count}
           postId={planner.data.document_id}
-          accessToken={session.accessToken}
+          accessToken={session?.accessToken || ''}
         />
       </div>
       <CommentSection
         postId={planner.data.document_id}
-        accessToken={session.accessToken}
+        accessToken={session?.accessToken || ''}
       />
     </div>
   );

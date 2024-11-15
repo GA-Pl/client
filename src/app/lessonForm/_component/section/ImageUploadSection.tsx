@@ -28,7 +28,7 @@ const ImageUploadSection = ({
   accessToken,
 }: ImageUploadProps) => {
   const [images, setImages] = useState<ImageWithPreview[]>([]);
-  console.log(images);
+
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const newImages = acceptedFiles.map((file) => ({
       name: file.name,

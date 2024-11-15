@@ -2,7 +2,7 @@ import axios from 'axios';
 import { BASE_NEXT_URL } from '@/_lib/utils/config';
 
 interface PostRecordData {
-  attachmentId: number;
+  imageId: number;
   activity_type: string;
   subject: string;
   content: string;
@@ -10,7 +10,7 @@ interface PostRecordData {
 
 const postRecord = async (data: PostRecordData, token: string) => {
   const postData = {
-    attachmentId: data.attachmentId,
+    imageId: data.imageId,
     activity_type: data.activity_type,
     subject: data.subject,
     content: data.content,

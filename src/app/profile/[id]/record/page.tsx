@@ -1,53 +1,62 @@
-import React from 'react';
-import RecordItem from './_component/RecordItem';
+'use client';
 
-const RecordPage = () => {
-  const recordData = [
-    {
-      id: 1,
-      images: [
-        '/images/랏코.webp',
-        '/images/우사기.webp',
-        '/images/치이카와.webp',
-        '/images/ham.jpeg',
-      ],
-      activity_type: '미술',
-      subject: '조개',
-      description: '현장학습에서 주워온 조개로 반을 꾸미는 우리반 친구들',
-      comment: 12,
-      like: 12,
-      scrap: 12,
+import { useQuery } from '@tanstack/react-query';
+import { useSession } from 'next-auth/react';
+import { v4 as uuidv4 } from 'uuid';
+import { IFeed } from '@/types/feed';
+import Loader from '@/app/ai/_component/loader/Loader';
+import RecordItem from './_component/RecordItem';
+import { getLog } from '../../_lib/getLog';
+
+export default function RecordPage({ params }: { params: { id: string } }) {
+  const { data: session } = useSession();
+  const accessToken = session?.accessToken;
+
+  const userId = Number(params.id);
+
+  const { data, isLoading, error } = useQuery(
+    ['records', accessToken],
+    () => {
+      if (!accessToken) throw new Error('No access token');
+      return getLog(accessToken, userId);
     },
     {
-      id: 12,
-      images: ['/images/카니.webp', '/images/쿠리만쥬.webp'],
-      activity_type: '과학',
-      subject: '나뭇잎',
-      description:
-        '가을 산책을 하며 모은 다양한 나뭇잎으로 과학 활동을 진행해요',
-      comment: 12,
-      like: 12,
-      scrap: 12,
+      enabled: !!session,
+      retry: false,
     },
-    {
-      id: 13,
-      images: ['/images/하치와레.webp'],
-      activity_type: '체육',
-      subject: '줄넘기',
-      description: '운동장에서 줄넘기 기술을 배우고 친구들과 함께 연습해봐요',
-      comment: 12,
-      like: 12,
-      scrap: 12,
-    },
-  ];
+  );
+
+  if (!session) {
+    return (
+      <div className={'h-[60dvh] py-4'}>
+        <Loader />
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className={'h-[60dvh] py-4'}>
+        <Loader />
+      </div>
+    );
+  }
+
+  if (error) {
+    console.error('Failed to fetch records:', error);
+    return <div>{'Error loading records'}</div>;
+  }
+
+  if (!data?.data.list || !Array.isArray(data.data.list)) {
+    console.error('Record data is not available or not in expected format');
+    return <div>{'No record data available'}</div>;
+  }
 
   return (
     <div>
-      {recordData.map((item) => (
-        <RecordItem key={item.id} item={item} />
+      {data.data.list.map((item: IFeed) => (
+        <RecordItem key={uuidv4()} data={item} />
       ))}
     </div>
   );
-};
-
-export default RecordPage;
+}

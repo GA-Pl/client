@@ -16,6 +16,7 @@
     "plugin:import/warnings",
     "plugin:prettier/recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:react/jsx-runtime",
     "prettier",
     "next/core-web-vitals"
   ],
@@ -81,6 +82,9 @@
     "@typescript-eslint/no-explicit-any": "off"
   },
   "settings": {
+    "react": {
+      "version": "detect" // React 버전을 자동으로 감지
+    },
     "import/resolver": {
       "node": {
         "extensions": [".js", ".jsx", ".ts", ".tsx"]

@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { apiRequest } from '@/_lib/utils/api';
 
-export async function GET(req: NextRequest) {
-  const host = req.headers.get('host');
-  const url = new URL(req.url, `http://${host}`);
-  const id = url.pathname.split('/').pop();
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } },
+) {
+  const { id } = params;
 
   try {
     const data = await apiRequest(
       'get',
       `/profile/follow?user_id=${id}&type=FOLLOWING`,
-      req,
     );
     return NextResponse.json(data, { status: 200 });
   } catch (error) {

@@ -14,6 +14,7 @@ interface PhotoStoreState {
   addPhotos: (newPhotos: ImageWithPreview[]) => void;
   removePhoto: (id: string) => void;
   setPhotos: (newPhotos: ImageWithPreview[]) => void;
+  reset: () => void;
 }
 
 export const usePhotoStore = create<PhotoStoreState>((set) => ({
@@ -28,4 +29,5 @@ export const usePhotoStore = create<PhotoStoreState>((set) => ({
     set(() => ({
       photos: newPhotos,
     })),
+  reset: () => set({ photos: [] }),
 }));

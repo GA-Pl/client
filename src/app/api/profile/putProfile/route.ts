@@ -7,7 +7,7 @@ export async function PUT(req: NextRequest) {
   const formData = await req.json();
 
   try {
-    const response = await apiRequest('put', `/profile/user`, req, formData);
+    const response = await apiRequest('put', `/profile/user`, formData);
 
     const updatedUser = response.data;
     await updateSession({

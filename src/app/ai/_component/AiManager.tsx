@@ -27,7 +27,7 @@ const AiManager = () => {
   const handleProceed = () => setCurrentStep(0);
 
   return (
-    <div>
+    <div className={'flex flex-col justify-center items-center mt-16'}>
       {currentStep === -1 && <Start onProceed={handleProceed} />}
       {currentStep >= 0 && currentStep <= 3 && (
         <BasicQuestion

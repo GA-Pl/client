@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
+import { useRouter } from 'next/navigation';
 import { category } from '@/_lib/constants/category';
 import { useCurriculumHandlers } from '@/_lib/hooks/useNurriCurriculum';
 import { IContentItem } from '@/types/content';
@@ -21,6 +22,7 @@ import PrecautionsSection from '@/app/lessonForm/_component/section/PrecautionSe
 import EvaluationsSection from '@/app/lessonForm/_component/section/EvaluationSection';
 import SaveButtons from '@/app/lessonForm/_component/section/SaveButtonsSection';
 import submitLessonForm from '@/app/lessonForm/_lib/api';
+import { validateFormData } from '@/app/lessonForm/_component/validation/validateFormData';
 import { useSubjectStore } from '../../_store/useSubjectStore';
 
 export default function AiPlan() {
@@ -66,12 +68,28 @@ export default function AiPlan() {
   const titleInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    titleInputRef.current?.focus();
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
     if (documentData) {
       titleInputRef.current?.focus();
+      setAge(documentData.data.age || 3);
+      let mappedGroupSize = 'MEDIUM';
+      switch (documentData.data.group_size) {
+        case '소집단':
+          mappedGroupSize = 'SMALL';
+          break;
+        case '대집단':
+          mappedGroupSize = 'LARGE';
+          break;
+        case '중집단':
+          mappedGroupSize = 'MEDIUM';
+          break;
+        default:
+          mappedGroupSize = 'MEDIUM';
+      }
+      setGroupSize(mappedGroupSize);
       setTitle(documentData.data.title || '');
       setSubject(documentData.data.subject || '');
       setDetailSubject(documentData.data.detail_subject || '');
@@ -119,7 +137,7 @@ export default function AiPlan() {
     { label: '중집단', value: 'MEDIUM', image: '/images/group/medium.png' },
     { label: '대집단', value: 'LARGE', image: '/images/group/large.png' },
   ];
-
+  const router = useRouter();
   const handleSubjectChange = (value: string) => {
     setSubject(value);
   };
@@ -176,13 +194,33 @@ export default function AiPlan() {
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
+
+    const isValid = validateFormData(
+      title,
+      subject,
+      detailSubject,
+      age,
+      groupSize,
+      activityType,
+      goals,
+      tools,
+      precautions,
+      evaluations,
+      contents,
+      curriculumComponents,
+    );
+
+    if (!isValid) {
+      return;
+    }
+
     setIsSaving(true);
 
     if (session) {
       try {
         const result = await submitLessonForm(formData, session.accessToken);
         toast.success('계획안 생성 성공!');
-        console.log(result);
+        router.push(`/lessonDetail/${result.data}`);
       } catch (error) {
         toast.error('계획안 생성 실패!');
         console.error('폼 제출 실패:', error);

@@ -6,15 +6,11 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(req: NextRequest) {
   const { id } = extractUrlId(req);
   const formData = await req.json();
-  console.log('===id===');
-  console.log(id);
-  console.log('===formData');
-  console.log(formData);
+
   try {
     const response = await apiRequest(
       'post',
       `/document/like/comment?comment_id=${id}`,
-      req,
       formData,
     );
     return NextResponse.json(response, { status: 200 });

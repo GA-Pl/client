@@ -6,16 +6,14 @@ import extractErrorMessage from '@/_lib/utils/extractErrorMessage';
 export async function POST(request: NextRequest) {
   const { id } = extractUrlId(request);
   const formData = await request.json();
-  console.log('fdfdfdf');
-  console.log(formData);
+
   try {
     const response = await apiRequest(
       'post',
       `/document/like?id=${id}`,
-      request,
       formData,
     );
-    console.log(response);
+
     return NextResponse.json(response, { status: 200 });
   } catch (error) {
     const errorMessage = extractErrorMessage(error);

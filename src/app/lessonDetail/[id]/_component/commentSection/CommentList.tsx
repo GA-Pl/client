@@ -44,7 +44,7 @@ const CommentList = ({
           />
         ))
       ) : (
-        <div>{'댓글이 존재하지 않습니다'}</div>
+        <div className={'text-slate-400'}>{'댓글이 존재하지 않습니다'}</div>
       )}
     </div>
   );

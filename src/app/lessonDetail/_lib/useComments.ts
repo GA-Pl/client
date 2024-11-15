@@ -6,7 +6,12 @@ import deleteComment from './deleteComment';
 import putComment from './putComment';
 import { postCommentLike } from './postCommentLike';
 
-export function useComments(postId: number, accessToken: string) {
+type CommentData = {
+  content: string;
+  parentCommentId?: number;
+};
+
+export function useComments(documentId: number, accessToken: string) {
   const queryClient = useQueryClient();
   const [showReplies, setShowReplies] = useState<Record<number, boolean>>({});
 
@@ -15,7 +20,9 @@ export function useComments(postId: number, accessToken: string) {
     isLoading,
     isError,
     error,
-  } = useQuery(['comments', postId], () => getComments(postId, accessToken));
+  } = useQuery(['comments', documentId], () =>
+    getComments(documentId, accessToken),
+  );
 
   const toggleReplies = (commentId: number) => {
     setShowReplies((prev) => ({
@@ -24,16 +31,12 @@ export function useComments(postId: number, accessToken: string) {
     }));
   };
 
-  type CommentData = {
-    content: string;
-    parentCommentId?: number;
-  };
-
   const addCommentMutation = useMutation(
-    (commentData: CommentData) => postComment(commentData, postId, accessToken),
+    (commentData: CommentData) =>
+      postComment(commentData, documentId, accessToken),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['comments', postId]);
+        queryClient.invalidateQueries(['comments', documentId]);
       },
     },
   );
@@ -42,7 +45,7 @@ export function useComments(postId: number, accessToken: string) {
     (commentId: number) => deleteComment(commentId, accessToken),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['comments', postId]);
+        queryClient.invalidateQueries(['comments', documentId]);
       },
     },
   );
@@ -52,7 +55,7 @@ export function useComments(postId: number, accessToken: string) {
       putComment({ content }, commentId, accessToken),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['comments', postId]);
+        queryClient.invalidateQueries(['comments', documentId]);
       },
     },
   );
@@ -61,7 +64,7 @@ export function useComments(postId: number, accessToken: string) {
     (commentId: number) => postCommentLike(commentId.toString(), accessToken),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['comments', postId]);
+        queryClient.invalidateQueries(['comments', documentId]);
       },
     },
   );

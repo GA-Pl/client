@@ -15,7 +15,6 @@ export async function POST(request: NextRequest) {
     const data = await apiRequest(
       'post',
       '/files/data',
-      request,
       formData,
       'multipart/form-data',
     );

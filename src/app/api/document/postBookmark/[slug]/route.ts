@@ -10,7 +10,6 @@ export async function POST(request: NextRequest) {
     const response = await apiRequest(
       'post',
       `/document/bookmark?id=${id}`,
-      request,
       formData,
     );
 

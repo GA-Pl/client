@@ -1,17 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { apiRequest } from '@/_lib/utils/api';
 
-export async function GET(req: NextRequest) {
-  const host = req.headers.get('host');
-  const url = new URL(req.url, `http://${host}`);
-  const slug = url.pathname.split('/').pop();
+export async function GET(
+  req: NextRequest,
+  context: { params: { slug: string } },
+) {
+  const { slug } = context.params;
+
+  if (!slug) {
+    return NextResponse.json(
+      { message: 'Slug parameter is missing' },
+      { status: 400 },
+    );
+  }
 
   try {
     const data = await apiRequest(
       'get',
       `/document/detail/plan?document_id=${slug}`,
-      req,
     );
+
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     const message =

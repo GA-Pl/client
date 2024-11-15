@@ -1,14 +1,16 @@
 import Link from 'next/link';
 
-export default function ErrorPage({
-  searchParams: { message },
-}: {
-  searchParams: { message: string };
-}) {
+interface ErrorPageProps {
+  searchParams: {
+    message?: string;
+  };
+}
+
+export default function ErrorPage({ searchParams }: ErrorPageProps) {
   return (
     <div
       className={
-        ' flex flex-col items-center justify-center min-h-screen bg-gray-50 text-gray-900'
+        'flex flex-col items-center justify-center min-h-screen bg-gray-50 text-gray-900'
       }
     >
       <div className={'p-6 rounded-lg shadow-lg bg-white max-w-sm'}>
@@ -16,7 +18,7 @@ export default function ErrorPage({
           {'에러 발생!'}
         </h1>
         <h2 className={'text-lg mb-4'}>
-          {decodeURIComponent(message as string)}
+          {decodeURIComponent(searchParams.message || '에러 메시지가 없습니다')}
         </h2>
         <Link
           href={'/'}

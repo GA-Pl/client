@@ -76,8 +76,6 @@ const BasicQuestion = ({ currentStep, setCurrentStep }: BasicQuestionProps) => {
 
   const { question, options, field } = questions[currentStep];
 
-  console.log(selectedAnswers);
-
   const handleGenerateAI = async () => {
     setLoading(true);
     if (accessToken && isCompleteAnswers(selectedAnswers)) {

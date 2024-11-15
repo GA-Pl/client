@@ -5,6 +5,7 @@ export async function getPlanners(id: string, token: string) {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`,
   };
+
   try {
     const res = await fetch(
       `${BASE_NEXT_URL}/api/document/lessonDetail/${id}`,
@@ -18,6 +19,7 @@ export async function getPlanners(id: string, token: string) {
     }
 
     const data = await res.json();
+
     return data;
   } catch (error) {
     console.error('Error fetching Planners:', error);

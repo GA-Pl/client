@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
   const formData = await request.json();
 
   try {
-    const data = await apiRequest('post', '/gpt/document', request, formData);
+    const data = await apiRequest('post', '/gpt/document', formData);
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     const message =

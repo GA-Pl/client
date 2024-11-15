@@ -1,37 +1,64 @@
+'use client';
+
+import { useQuery } from '@tanstack/react-query';
 import { v4 as uuidv4 } from 'uuid';
-import { auth } from '@/auth';
+import { useSession } from 'next-auth/react';
 import { IFeed } from '@/types/feed';
+import Loader from '@/app/ai/_component/loader/Loader';
 import { getScrap } from '../../_lib/getScrap';
 import PlanItem from '../plan/_component/PlanItem';
-// import RecordItem from '../record/_component/RecordItem';
+import RecordItem from '../record/_component/RecordItem';
 
-interface Session {
-  accessToken: string;
-}
+export default function ScrapPage() {
+  const { data: session } = useSession();
+  const accessToken = session?.accessToken;
 
-export default async function ScrapPage() {
-  const session: Session | null = await auth();
+  const { data, isLoading, error } = useQuery(
+    ['scrap', accessToken],
+    () => {
+      if (!accessToken) throw new Error('No access token');
+      return getScrap(accessToken);
+    },
+    {
+      enabled: !!session,
+      retry: false,
+    },
+  );
 
   if (!session) {
-    console.error('No session available, user might not be logged in');
-    return <div>{'유저 정보가 존재하지 않습니다'}</div>;
+    return (
+      <div className={'h-[60dvh] py-4'}>
+        <Loader />
+      </div>
+    );
   }
 
-  const scrapData = await getScrap(session.accessToken);
+  if (isLoading) {
+    return (
+      <div className={'h-[60dvh] py-4'}>
+        <Loader />
+      </div>
+    );
+  }
 
-  if (!scrapData.data.list || scrapData.data.list.length === 0) {
+  if (error) {
+    console.error('Failed to fetch scrap data:', error);
+    return <div>{'Error loading scrap data'}</div>;
+  }
+
+  if (!data?.data.list || data.data.list.length === 0) {
     return <div className={'h-dvh ml-4'}>{'스크랩한 글이 없습니다.'}</div>;
   }
 
   return (
     <div>
-      {scrapData.data.list.map((item: IFeed) => {
+      {data.data.list.map((item: IFeed) => {
         const key = uuidv4();
         switch (item.type) {
           case 'PLAN':
             return <PlanItem key={key} data={item} />;
-          // case 'LOG':
-          //   return <RecordItem key={key} data={item} />;
+          case 'LOG':
+            return <RecordItem key={key} data={item} />;
           default:
             return null;
         }

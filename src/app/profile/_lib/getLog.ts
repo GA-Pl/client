@@ -1,12 +1,12 @@
 import { BASE_NEXT_URL } from '@/_lib/utils/config';
 
-export async function getScrap(token: string) {
+export async function getLog(token: string, id: number) {
   const headers = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`,
   };
   try {
-    const res = await fetch(`${BASE_NEXT_URL}/api/profile/getMyLog`, {
+    const res = await fetch(`${BASE_NEXT_URL}/api/profile/getMyLog/${id}`, {
       headers,
     });
 
