@@ -18,6 +18,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'gapple-files.s3.ap-northeast-2.amazonaws.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'gapple-client.vercel.app',
+      },
     ],
   },
 };

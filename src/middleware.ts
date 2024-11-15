@@ -16,6 +16,16 @@ export async function middleware(request: NextRequest) {
   const session = await auth();
   const { pathname } = request.nextUrl;
 
+  if (pathname.startsWith('/api/')) {
+    const token = request.headers.get('Authorization');
+    if (!token) {
+      return NextResponse.json(
+        { message: 'Authorization token is required' },
+        { status: 401 },
+      );
+    }
+  }
+
   if (isMatch(pathname, protectedRoutes)) {
     return session
       ? NextResponse.next()
