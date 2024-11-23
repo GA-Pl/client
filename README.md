@@ -1,33 +1,63 @@
-# GA:Pl
+<div align="center">
+<img src="./docs/header.png"/>
+  <h1>GA:Pl</h1>
+  <strong>Generate Ai Planner</strong>
+  <div>for every early childhood educators</div>
+</div>
+<br><br>
 
-- Generate Ai Planner for early childhood education
-  <img src="/images/GappleLogo.png">
+# Tech Stack
 
-## Getting Started
+# Frontend
 
-First, run the development server:
+- React
+- Next.js
+- Typescript
+- Tailwind css
+- Vercel
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<br />
 
-## Learn More
+## Pcode
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<img src="./docs/pcode.png"/>
+<div>서류 작업은 오래 걸립니다. <br/>
+  교육 계획안도 마찬가지이죠.<br/>
+서류 작성은 교사에게 부차적입니다.<br/>
+오랜 시간 쓰지 마세요. 다 GA:Pl에게 맡기세요 :) </div>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+# Features in this application
+
+## **1. AI generate**
+<div>대화형으로 AI 계획안을 작성하는 페이지입니다.</div>
+</br>
+<img src="./docs/AIFunction.png"/>
 
 ---
 
-| Frontend | Backend |
-| 곽민경 | 김정은 |
-| mikio999 | |
+## **2. Detail**
+<div>세부 교육계획안을 보여주는 페이지입니다.</div>
+</br>
+<img src="./docs/tablet.png"/>
+
+---
+
+## **3. write planner**
+<div>처음부터 직접 교육계획안을 작성하는 페이지입니다.</div>
+</br>
+<img src="./docs/writePlanner.png"/>
+
+---
+</br>
+
+> **Deployment**
+> <div>개발 진행중..</div>
+
+<!-- TODO: add image -->
+
+<br />
+
+## Articles
+
+[Blog](https://velog.io/@mikio/series/Gapple)

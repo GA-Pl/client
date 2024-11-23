@@ -1,5 +1,11 @@
+import AiManager from './_component/AiManager';
+
 const AiPage = () => {
-  return <h1>Ai 생성기 페이지</h1>;
+  return (
+    <div className={'w-full h-screen'}>
+      <AiManager />
+    </div>
+  );
 };
 
 export default AiPage;

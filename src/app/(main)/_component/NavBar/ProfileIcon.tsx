@@ -1,7 +1,85 @@
+import { useState, useEffect, useRef } from 'react';
+import { useSession, signOut } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { BounceLoader } from 'react-spinners';
 import MenuItem from './MenuItem';
 
-const ProfileIcon = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
+const DropdownMenu = () => {
+  const { data: session } = useSession();
+
+  if (!session) {
+    return null;
+  }
+  return (
+    <div
+      className={
+        'absolute left-12 mt-2 py-2 w-24 bg-white rounded-lg shadow-xl'
+      }
+    >
+      <Link
+        href={`/profile/${session.userId}/plan`}
+        className={
+          'block px-4 py-2 text-center text-sm text-slate-700 hover:bg-slate-100'
+        }
+      >
+        {'내 프로필'}
+      </Link>
+      <button
+        type={'button'}
+        onClick={(e) => {
+          e.preventDefault();
+          signOut();
+        }}
+        className={
+          'block px-4 py-2 w-full text-sm text-slate-700 hover:bg-slate-100'
+        }
+      >
+        {'로그아웃'}
+      </button>
+    </div>
+  );
+};
+
+const ProfileIcon = () => {
+  const { data: session, status } = useSession();
+  const [menuVisible, setMenuVisible] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setMenuVisible(false);
+    };
+
+    handleRouteChange();
+  }, [pathname]);
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setMenuVisible(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [menuRef]);
+
+  if (status === 'loading') {
+    return (
+      <div className={'flex justify-center items-center mt-64'}>
+        <BounceLoader color={'#FF69B4'} />
+      </div>
+    );
+  }
+
+  const isLoggedIn = status === 'authenticated';
+  const userImg = session?.profileImg;
+
   if (!isLoggedIn) {
     return (
       <div>
@@ -16,20 +94,33 @@ const ProfileIcon = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
     );
   }
 
+  const imageSrc = userImg || '/images/gappler.png';
+
   return (
-    <div className="flex items-center justify-center m-4">
-      <Link href="/profile">
+    <div className={'flex items-center justify-center m-4 relative'}>
+      <button
+        type={'button'}
+        onClick={() => setMenuVisible(!menuVisible)}
+        aria-label={'Toggle profile options'}
+      >
         <div
-          className="w-10 h-10 rounded-full tablet:w-8 tablet:h-8"
+          className={
+            'w-10 laptop:w-12 laptop:h-12 h-10 rounded-full tablet:w-8 tablet:h-8'
+          }
           style={{
-            backgroundImage: 'url(/images/ham.jpeg)',
+            backgroundImage: `url('${imageSrc}')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             border: '2px solid white',
             boxShadow: '0 2px 4px rgba(0, 0, 0, 0.25)',
           }}
         />
-      </Link>
+      </button>
+      {menuVisible && (
+        <div ref={menuRef}>
+          <DropdownMenu />
+        </div>
+      )}
     </div>
   );
 };

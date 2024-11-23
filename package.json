@@ -12,23 +12,43 @@
     "postinstall": "husky install"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^17.0.0",
+    "@tanstack/react-query": "^4.36.1",
+    "@tanstack/react-query-devtools": "4",
     "axios": "^1.7.7",
-    "next": "14.2.5",
+    "framer-motion": "^11.11.8",
+    "next": ">=14.2.10",
     "next-auth": "^5.0.0-beta.20",
+    "path-to-regexp": "^8.0.0",
     "punycode": "^2.3.1",
-    "react": "^18",
-    "react-dom": "^18"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-dropzone": "^14.2.9",
+    "react-spinners": "^0.14.1",
+    "react-toastify": "^10.0.5",
+    "swiper": "^11.1.14",
+    "uuid": "^10.0.0",
+    "zustand": "^4.5.5"
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "^15.0.3",
+    "@tanstack/eslint-plugin-query": "4",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/uuid": "^10.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.4.0",
+    "@typescript-eslint/parser": "^8.4.0",
     "autoprefixer": "^10.4.20",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-next": "14.2.5",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-import-resolver-typescript": "^3.6.3",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsx-a11y": "^6.9.0",
+    "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "^4.6.2",
     "husky": "^8.0.3",
@@ -40,7 +60,7 @@
     "typescript": "^5"
   },
   "lint-staged": {
-    "*.js": [
+    "*.{js, jsx, ts, tsx}": [
       "eslint --fix",
       "prettier --write"
     ],

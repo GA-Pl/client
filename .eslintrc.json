@@ -16,7 +16,9 @@
     "plugin:import/warnings",
     "plugin:prettier/recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier"
+    "plugin:react/jsx-runtime",
+    "prettier",
+    "next/core-web-vitals"
   ],
   // [rules] 상세 규칙
   "rules": {
@@ -80,6 +82,9 @@
     "@typescript-eslint/no-explicit-any": "off"
   },
   "settings": {
+    "react": {
+      "version": "detect" // React 버전을 자동으로 감지
+    },
     "import/resolver": {
       "node": {
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
@@ -87,6 +92,10 @@
       "typescript": {
         "alwaysTryTypes": true,
         "project": "."
+      },
+      "alias": {
+        "map": [["@", "./src"]],
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".json"]
       }
     }
   }

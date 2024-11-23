@@ -1,38 +1,59 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { useQuery } from '@tanstack/react-query';
+import { IFeed } from '@/types/feed';
+import Loader from '@/app/profile/[id]/_component/Loader';
 import Feed from './Feed';
-import IFeed from '@/types/feed';
-import nurriCurriculum from '../../_lib/nurriCurriculum';
+import { getFeeds } from '../../_lib/getFeeds';
 
-function FeedList() {
-  const [feeds, setFeeds] = useState<IFeed[]>([]);
+export default function FeedList() {
+  const { data: session } = useSession();
+  const accessToken = session?.accessToken;
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await fetch('/data/dummyFeeds.JSON');
-        const data = await res.json();
+  const { data, isLoading, error } = useQuery(
+    ['feeds', accessToken],
+    () => {
+      if (!accessToken) throw new Error('No access token');
+      return getFeeds(session.accessToken);
+    },
+    {
+      enabled: !!session,
+      retry: false,
+    },
+  );
 
-        if (!res.ok) {
-          setFeeds(nurriCurriculum.mockData);
-        }
-        setFeeds(data.mockData);
-      } catch (error) {
-        console.error('Failed to load data', error);
-      }
-    }
-    fetchData();
-  }, []);
+  if (!session) {
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
+  }
 
-  // function FeedList({ feeds }) {
+  if (isLoading) {
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
+  }
+
+  if (error) {
+    console.error('Failed to fetch feeds:', error);
+    return <div>{'Error loading feeds'}</div>;
+  }
+
+  if (!data?.data.list || !Array.isArray(data.data.list)) {
+    console.error('Feed data is not available or not in expected format');
+    return <div>{'No feed data available'}</div>;
+  }
+
   return (
-    <div className="mt-20">
-      {feeds.map((feedData) => (
-        <Feed key={feedData.document_id} feed={feedData} />
+    <div>
+      {data.data.list.map((feedData: IFeed) => (
+        <Feed key={feedData.id} feed={feedData} />
       ))}
     </div>
   );
 }
-
-export default FeedList;

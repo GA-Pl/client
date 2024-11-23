@@ -1,6 +1,8 @@
 'use client';
 
+import Image from 'next/image';
 import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 interface ImageCarouselProps {
   images: string[];
@@ -20,35 +22,53 @@ function ImageCarousel({ images }: ImageCarouselProps) {
   };
 
   return (
-    <div className="relative w-full overflow-hidden">
-      <img
+    <div className={'relative w-full overflow-hidden'}>
+      <Image
         src={images[currentIndex]}
         alt={`Slide ${currentIndex + 1}`}
-        className="w-full h-auto"
+        className={'w-full h-auto'}
+        width={500}
+        height={500}
       />
-      <div className="absolute inset-y-0 flex items-center justify-between w-full px-4">
-        <button
-          onClick={prevImage}
-          className="bg-white bg-opacity-50 p-2 rounded-full text-lg cursor-pointer hover:bg-opacity-75"
+      {images.length > 1 && (
+        <div
+          className={
+            'absolute inset-y-0 flex items-center justify-between w-full px-4'
+          }
         >
-          &lt;
-        </button>
-        <button
-          onClick={nextImage}
-          className="bg-white bg-opacity-50 p-2 rounded-full text-lg cursor-pointer hover:bg-opacity-75"
-        >
-          &gt;
-        </button>
-      </div>
-      <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2">
+          <button
+            type={'button'}
+            onClick={prevImage}
+            className={
+              'bg-white bg-opacity-50 p-2 rounded-full text-lg cursor-pointer hover:bg-opacity-75'
+            }
+          >
+            &lt;
+          </button>
+          <button
+            type={'button'}
+            onClick={nextImage}
+            className={
+              'bg-white bg-opacity-50 p-2 rounded-full text-lg cursor-pointer hover:bg-opacity-75'
+            }
+          >
+            &gt;
+          </button>
+        </div>
+      )}
+      <div
+        className={
+          'absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2'
+        }
+      >
         {images.map((_, index) => (
           <span
-            key={index}
+            key={uuidv4()}
             className={`block h-2 w-2 rounded-full cursor-pointer ${
               index === currentIndex ? 'bg-gray-800' : 'bg-gray-400'
             }`}
             onClick={() => setCurrentIndex(index)}
-          ></span>
+          />
         ))}
       </div>
     </div>

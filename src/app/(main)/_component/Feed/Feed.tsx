@@ -1,66 +1,89 @@
-import IFeed from '@/types/feed';
-import React from 'react';
-import ImageCarousel from './ImageCarousel';
-
-interface ExtendedIFeed extends IFeed {
-  additionalProperty?: string;
-}
+import Link from 'next/link';
+import ActionButtons from '@/_component/Item/ActionButtons';
+import { IFeed } from '@/types/feed';
+import { useSession } from 'next-auth/react';
+import formatRelativeTime from '../../_lib/formatRelativeTime';
+import PlanFeed from './PlanFeed';
+import LogFeed from './LogFeed';
+import PlanCommentSection from './PlanCommentSection';
+import LogCommentSection from './LogCommentSection';
 
 interface FeedProps {
-  feed: ExtendedIFeed;
+  feed: IFeed;
 }
 
 export default function Feed({ feed }: FeedProps) {
+  const { data: session } = useSession();
+
+  if (!session) {
+    console.error('No session available, user might not be logged in');
+    return <div>{'유저 정보가 존재하지 않습니다'}</div>;
+  }
+
   return (
-    <div className="mx-auto my-4 max-w-xs tablet:max-w-sm laptop:max-w-md desktop:max-w-lg">
+    <div
+      className={
+        'mx-auto my-4 max-w-xs tablet:max-w-sm laptop:max-w-md desktop:max-w-lg font-pretendard'
+      }
+    >
+      <Link href={`/profile/${feed.authorId}/plan`}>
+        <div className={'flex items-center mb-4'}>
+          <div
+            className={'w-10 h-10 laptop:w-12 laptop:h-12 rounded-full'}
+            style={{
+              backgroundImage: `url(${feed.authorThumbnailImage})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              border: '2px solid white',
+              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.25)',
+            }}
+          />
+          <div className={'ml-2'}>
+            <strong>{feed.authorNickname}</strong>
+            <span className={'text-slate-600'}>
+              {'의'}
+              <strong className={'text-primary ml-1'}>
+                {feed.type === 'PLAN' ? '교육계획안' : '기록'}
+              </strong>
+              {'이 올라왔어요!'}
+            </span>
+            <div className={'text-slate-500 text-xs'}>
+              {formatRelativeTime(feed.createdAt)}
+            </div>
+          </div>
+        </div>
+      </Link>
       <div
-        key={feed.document_id}
-        className="bg-white border rounded-lg overflow-hidden"
+        key={feed.id}
+        className={
+          'bg-slate-200 shadow-md rounded-lg overflow-hidden cursor-pointer'
+        }
       >
-        <div className="p-4">
-          <h2 className="font-bold">{feed.activity_plan.title}</h2>
+        {feed.type === 'PLAN' ? (
+          <PlanFeed plan={feed} />
+        ) : (
+          <LogFeed log={feed} />
+        )}
 
-          {feed.activity_plan.subject.map((sub: string, idx: number) => (
-            <h3 key={idx} className="text-sm text-gray-500">
-              {sub}
-            </h3>
-          ))}
+        <div className={'px-4 pb-2'}>
+          <ActionButtons
+            like={feed.liked_count}
+            comment={feed.comments.length}
+            scrap={feed.bookmark_count}
+            isLiked={feed.liked}
+            isBookmarked={feed.bookmarked}
+            postId={feed.id}
+          />
+        </div>
 
-          {feed.activity_plan.activity_content.map(
-            (content: { subtitle: string; content: string }, idx: number) => (
-              <div key={idx}>
-                <h4 className="font-semibold">{content.subtitle}</h4>
-                <p>{content.content}</p>
-              </div>
-            ),
-          )}
-          {feed.activity_plan.file.map(
-            (file: { url: string; type: string }, idx: number) => (
-              <a key={idx} href={file.url} className="text-blue-500 text-sm">
-                Attached File
-              </a>
-            ),
-          )}
-        </div>
-        <div className="p-4 border-t">
-          <p>{feed.activity_record.content}</p>
-          <ImageCarousel images={feed.activity_record.image} />
-          {feed.activity_record.file.map(
-            (file: { url: string; type: string }, idx: number) => (
-              <a key={idx} href={file.url} className="text-blue-500 text-sm">
-                Download Record File
-              </a>
-            ),
-          )}
-        </div>
-        <div className="p-4 flex justify-between itemss-center">
-          <button
-            className={`heart ${feed.is_liked ? 'text-red-500' : 'text-gray-400'}`}
-          >
-            ❤️ {feed.is_liked ? 'Liked' : 'Like'}
-          </button>
-          <span>🔖 {feed.bookmark_count} Bookmarks</span>
-        </div>
+        {feed.type === 'PLAN' ? (
+          <PlanCommentSection comments={feed.comments} />
+        ) : (
+          <LogCommentSection
+            postId={feed.id}
+            accessToken={session.accessToken}
+          />
+        )}
       </div>
     </div>
   );

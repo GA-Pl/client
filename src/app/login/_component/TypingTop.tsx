@@ -1,18 +1,16 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-
-interface TypingText {
-  text: string;
-  color: string;
-}
+import React, { useState, useEffect, useMemo } from 'react';
 
 const TypingTop = () => {
-  const fullText: TypingText[] = [
-    { text: 'Generate', color: 'text-primary' },
-    { text: 'AI', color: 'text-primary' },
-    { text: 'Planner', color: 'text-primary' },
-  ];
+  const fullText = useMemo(
+    () => [
+      { text: 'Generate', color: 'text-primary' },
+      { text: 'AI', color: 'text-primary' },
+      { text: 'Planner', color: 'text-primary' },
+    ],
+    [],
+  );
 
   const [index, setIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);
@@ -41,10 +39,10 @@ const TypingTop = () => {
   }, [subIndex, index, fullText]);
 
   return (
-    <h1 className="text-xl">
+    <h1 className={'text-xl'}>
       {showAll
-        ? fullText.map((line, idx) => (
-            <React.Fragment key={idx}>
+        ? fullText.map((line) => (
+            <React.Fragment key={`${line.text}-${line.color}`}>
               <span className={`font-maple ${line.color} text-xl`}>
                 {line.text}
               </span>
@@ -52,7 +50,7 @@ const TypingTop = () => {
             </React.Fragment>
           ))
         : fullText.map((line, idx) => (
-            <React.Fragment key={idx}>
+            <React.Fragment key={`${line.text}-${line.color}`}>
               {idx === index && (
                 <span className={`font-maple ${line.color} text-xl`}>
                   {line.text.substring(0, subIndex)}

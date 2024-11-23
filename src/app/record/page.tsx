@@ -1,5 +1,7 @@
+import RecordModal from './_component/RecordModal';
+
 const RecordPage = () => {
-  return <h1>수업 기록지 페이지</h1>;
+  return <RecordModal />;
 };
 
 export default RecordPage;

@@ -2,10 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
+@import '~react-toastify/dist/ReactToastify.min.css';
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mySwiper .swiper-button-next,
+.mySwiper .swiper-button-prev {
+  color: #ed4264;
+  opacity: 50%;
+  transition: transform 0.2s ease-in-out; /* 호버 시 애니메이션 */
+}
+
+.mySwiper .swiper-button-next:hover,
+.mySwiper .swiper-button-prev:hover {
+  transform: scale(1.1); /* 호버 시 확대 효과 */
+  opacity: 100%;
+}
+
+.mySwiper .swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  background-color: #ed4264;
+  opacity: 1;
+}
+
+.mySwiper .swiper-pagination-bullet-active {
+  background-color: #fde8e8; /* 활성화된 색상 */
+}
+
+@media (max-width: 600px) {
+  .mySwiper .swiper-button-next,
+  .mySwiper .swiper-button-prev {
+    display: none;
+  }
 }
 
 @font-face {
@@ -34,5 +86,44 @@ body {
   }
   .button-border {
     @apply border-solid border-2 border-primary;
+  }
+  .sidebar-transition {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  .title-effect {
+    @apply border-l-4 border-l-slate-700 pl-4 text-xl text-slate-500;
+  }
+  .bg-heart {
+    @apply w-[15px] h-[15px] bg-cover;
+    background-image: url('/icons/heart.png');
+  }
+
+  .bg-heartRose {
+    @apply w-[15px] h-[15px] bg-cover;
+    background-image: url('/icons/heartRose.png');
+  }
+
+  .bg-star {
+    @apply w-[15px] h-[15px] bg-cover;
+    background-image: url('/icons/star.png');
+  }
+
+  .bg-starYellow {
+    @apply w-[15px] h-[15px] bg-cover;
+    background-image: url('/icons/starYellow.png');
+  }
+
+  .bg-comment {
+    @apply w-[15px] h-[15px] bg-cover;
+    background-image: url('/icons/comment.png');
+  }
+
+  /* Hover effect */
+  .like-icon:hover {
+    @apply bg-heartRose;
+  }
+
+  .bookmark-icon:hover {
+    @apply bg-starYellow;
   }
 }

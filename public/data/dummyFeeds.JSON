@@ -4,16 +4,16 @@
       "document_id": 1,
       "author_id": 1,
       "activity_plan": {
-        "title": "산책 계획안",
-        "subject": ["건강 증진"],
+        "title": "거미가 줄을 타고 올라갑니다.",
+        "subject": ["친구", "곤충", "봄"],
         "activity_content": [
           {
-            "subtitle": "소제목 1",
-            "content": "매일 아침 30분 산책하기"
+            "subtitle": "동화 내용 상기시키기",
+            "content": "사랑하는 달님반~ 우리 지난 시간에 누구의 이야기를 들었었지?"
           },
           {
-            "subtitle": "소제목 2",
-            "content": "주변 공원 방문하기"
+            "subtitle": "동극 소개하기",
+            "content": "안녕? 얘들아~ 나는 오늘 달님반을 놀러온 거미야~"
           }
         ],
         "file": [

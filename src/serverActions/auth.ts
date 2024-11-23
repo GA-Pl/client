@@ -10,7 +10,7 @@ export const signInWithKakao = async () => {
   await signIn('kakao', { redirectTo: '/' });
 };
 
-export const signOutWithForm = async (formData: FormData) => {
+export const signOutWithForm = async () => {
   await signOut();
 };
 
