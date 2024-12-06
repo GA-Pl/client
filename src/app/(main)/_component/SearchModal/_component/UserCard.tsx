@@ -24,21 +24,27 @@ export default function UserCard({ user }: UserCardProps) {
 
   return (
     <div
-      className="p-4 bg-white shadow rounded-md hover:shadow-lg transition-shadow flex items-start gap-4 cursor-pointer"
+      className={
+        'p-4 bg-white shadow rounded-md hover:shadow-lg transition-shadow flex items-start gap-4 cursor-pointer'
+      }
       onClick={handleNavigation}
     >
       <Image
         src={user.profileImg}
         alt={`${user.nickname}의 프로필 이미지`}
-        className="w-20 h-20 rounded-full object-cover shadow-md flex-shrink-0"
+        className={
+          'w-20 h-20 rounded-full object-cover shadow-md flex-shrink-0'
+        }
         width={80}
         height={80}
       />
-      <div className="flex flex-col justify-between flex-grow">
-        <h3 className="text-xl font-semibold text-slate-800">
+      <div className={'flex flex-col justify-between flex-grow'}>
+        <h3 className={'text-xl font-semibold text-slate-800'}>
           {user.nickname}
         </h3>
-        <p className="text-sm text-slate-600 mt-2 leading-relaxed line-clamp-3">
+        <p
+          className={'text-sm text-slate-600 mt-2 leading-relaxed line-clamp-3'}
+        >
           {user.selfIntro}
         </p>
       </div>

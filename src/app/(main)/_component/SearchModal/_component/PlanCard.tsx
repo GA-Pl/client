@@ -27,27 +27,35 @@ export default function PlanCard({ result }: PlanCardProps) {
 
   return (
     <div
-      className="p-4 bg-white shadow rounded-lg hover:shadow-xl transition-shadow border border-slate-200 cursor-pointer"
+      className={
+        'p-4 bg-white shadow rounded-lg hover:shadow-xl transition-shadow border border-slate-200 cursor-pointer'
+      }
       onClick={handleNavigation}
     >
-      <h3 className="text-xl font-semibold text-slate-800 mb-2">
+      <h3 className={'text-xl font-semibold text-slate-800 mb-2'}>
         {`${result.title}`}
       </h3>
 
       {parsedContent.length > 0 ? (
-        <ul className="space-y-2">
+        <ul className={'space-y-2'}>
           {parsedContent.map((item) => (
             <li
               key={uuidv4()}
-              className="bg-slate-50 p-3 rounded-md shadow-sm hover:bg-slate-100 transition-colors"
+              className={
+                'bg-slate-50 p-3 rounded-md shadow-sm hover:bg-slate-100 transition-colors'
+              }
             >
-              <h4 className="text-slate-700 font-medium">{`${item.subtitle}`}</h4>
-              <p className="text-slate-600 text-sm mt-1">{`${item.content}`}</p>
+              <h4
+                className={'text-slate-700 font-medium'}
+              >{`${item.subtitle}`}</h4>
+              <p
+                className={'text-slate-600 text-sm mt-1'}
+              >{`${item.content}`}</p>
             </li>
           ))}
         </ul>
       ) : (
-        <p className="text-slate-600 text-sm">{`내용이 없습니다.`}</p>
+        <p className={'text-slate-600 text-sm'}>{`내용이 없습니다.`}</p>
       )}
     </div>
   );

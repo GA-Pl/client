@@ -23,7 +23,7 @@ export default function SearchResults({
 }: SearchResultsProps) {
   if (!query) {
     return (
-      <div className="flex justify-center items-center text-slate-600 h-20">
+      <div className={'flex justify-center items-center text-slate-600 h-20'}>
         {'검색어를 입력해주세요'}
       </div>
     );
@@ -31,7 +31,7 @@ export default function SearchResults({
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center text-slate-600 h-20">
+      <div className={'flex justify-center items-center text-slate-600 h-20'}>
         {'검색 중...'}
       </div>
     );
@@ -39,7 +39,7 @@ export default function SearchResults({
 
   if (isError) {
     return (
-      <div className="flex justify-center items-center text-red-600 h-20">
+      <div className={'flex justify-center items-center text-red-600 h-20'}>
         {'검색 중 오류가 발생했습니다.'}
       </div>
     );
@@ -52,14 +52,18 @@ export default function SearchResults({
       !data.plan_result?.length)
   ) {
     return (
-      <div className="flex justify-center items-center text-slate-600 h-20">
+      <div className={'flex justify-center items-center text-slate-600 h-20'}>
         {'사용자가 작성한 키워드에 맞는 결과가 없습니다'}
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col mt-4 overflow-y-auto max-h-[500px] space-y-4 p-2">
+    <div
+      className={
+        'flex flex-col mt-4 overflow-y-auto max-h-[500px] space-y-4 p-2'
+      }
+    >
       {data.user_result?.length > 0 && (
         <div className={'text-slate-600 text-sm'}>{'유저'}</div>
       )}

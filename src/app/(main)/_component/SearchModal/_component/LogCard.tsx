@@ -21,10 +21,12 @@ export default function LogCard({ result }: LogCardProps) {
 
   return (
     <div
-      className="p-4 bg-white shadow rounded-md hover:shadow-lg transition-shadow border border-slate-200 cursor-pointer"
+      className={
+        'p-4 bg-white shadow rounded-md hover:shadow-lg transition-shadow border border-slate-200 cursor-pointer'
+      }
       onClick={handleNavigation}
     >
-      <p className="text-slate-600">{result.content}</p>
+      <p className={'text-slate-600'}>{result.content}</p>
     </div>
   );
 }
