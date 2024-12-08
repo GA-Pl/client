@@ -12,6 +12,11 @@ import { useSubjectStore } from '../_store/useSubjectStore';
 const AiManager = () => {
   const [currentStep, setCurrentStep] = useState(-1);
   const { subjectData, documentData } = useSubjectStore();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     if (subjectData && currentStep === 4) {
       setCurrentStep(5);

@@ -1,6 +1,6 @@
 'use client';
 
-import { useComments } from '@/app/lessonDetail/_lib/useComments';
+import { useComments } from '@/app/lessonDetail/_lib/comment/useComments';
 import CommentList from './CommentList';
 import NewCommentInput from './CommentInput';
 

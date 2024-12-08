@@ -17,7 +17,7 @@ const ContentSection = ({ contents, setContents }: ContentSectionProps) => {
   const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
-    if (documentData && pathname === '/ai') {
+    if (contents.length === 0 && documentData && pathname === '/ai') {
       const loadedContents = documentData.data.activity_content.map((item) => ({
         id: uuidv4(),
         subtitle: item.subtitle,
@@ -26,18 +26,9 @@ const ContentSection = ({ contents, setContents }: ContentSectionProps) => {
           text: text.trim(),
         })),
       }));
-
       setContents(loadedContents);
-    } else {
-      setContents([
-        {
-          id: uuidv4(),
-          subtitle: '',
-          contents: [{ id: uuidv4(), text: '' }],
-        },
-      ]);
     }
-  }, [documentData, pathname, setContents]);
+  }, [documentData, pathname, setContents, contents]);
 
   const handleContentChange = (
     id: string,
@@ -155,6 +146,7 @@ const ContentSection = ({ contents, setContents }: ContentSectionProps) => {
 
   return (
     <div>
+      <h1 className={'title-effect'}>{'세부내용'}</h1>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId={'top-level'} type={'top-level'}>
           {(provided, snapshot) => (

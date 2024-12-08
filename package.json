@@ -25,6 +25,7 @@
     "react-dom": "^18.3.1",
     "react-dropzone": "^14.2.9",
     "react-spinners": "^0.14.1",
+    "react-to-print": "^3.0.2",
     "react-toastify": "^10.0.5",
     "swiper": "^11.1.14",
     "uuid": "^10.0.0",

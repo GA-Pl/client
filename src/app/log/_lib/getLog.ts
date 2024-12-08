@@ -7,10 +7,6 @@ export async function getLog(id: number, token: string) {
   };
 
   try {
-    console.log('===id');
-    console.log(id);
-    console.log('===token');
-    console.log(token);
     const res = await fetch(`${BASE_NEXT_URL}/api/log/${id}`, {
       headers,
     });

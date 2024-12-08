@@ -114,7 +114,7 @@ const ContentItem = ({
                 {...provided.droppableProps}
                 className={`p-2 ${snapshot.isDraggingOver ? 'bg-gray-100' : 'bg-white'}`}
               >
-                {content.contents.map((item, contentIndex) => (
+                {content?.contents?.map((item, contentIndex) => (
                   <Draggable
                     key={item.id}
                     draggableId={item.id}
@@ -136,7 +136,7 @@ const ContentItem = ({
                             className={'mr-2 text-red-400 hover:text-red-800'}
                           >
                             <Image
-                              src={'/icons/deleteContent.png'}
+                              src={'/icons/deletecontent.png'}
                               width={12}
                               height={12}
                               alt={'Delete'}

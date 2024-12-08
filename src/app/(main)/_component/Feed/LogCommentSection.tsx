@@ -2,7 +2,7 @@
 
 import NewCommentInput from '@/app/lessonDetail/[id]/_component/commentSection/CommentInput';
 import CommentList from '@/app/lessonDetail/[id]/_component/commentSection/CommentList';
-import { useComments } from '@/app/lessonDetail/_lib/useComments';
+import { useComments } from '@/app/lessonDetail/_lib/comment/useComments';
 
 const LogCommentSection = ({
   postId,

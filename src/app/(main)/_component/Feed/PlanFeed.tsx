@@ -13,7 +13,7 @@ const PlanFeed = ({ plan }: PlanProps) => {
     <div>
       <div className={'p-4'}>
         <Link href={`/lessonDetail/${plan.id}`} passHref>
-          <h1 className={'text-xl font-bold'}>{plan.title}</h1>
+          <h2 className={'text-lg font-semibold'}>{plan.title}</h2>
         </Link>
         <div className={'flex desktop:flex-row flex-col mt-2'}>
           <div className={'flex'}>

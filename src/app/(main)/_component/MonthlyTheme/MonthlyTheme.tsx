@@ -11,7 +11,7 @@ function MonthlyTheme() {
   ];
   return (
     <div>
-      <h2 className={'mb-4 font-bold'}>{'🔥 11월 뜨는 주제'}</h2>
+      <h2 className={'my-4 font-bold'}>{'🔥 11월 뜨는 주제'}</h2>
       <div>
         <AnimatePresence>
           {data.map((theme) => (

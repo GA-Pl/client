@@ -8,6 +8,7 @@ import LessonDetails from './_component/lessonDetails/LessonDetails';
 import { getPlanners } from '../_lib/getPlanners';
 import Profile from './_component/profileSection/Profile';
 import ButtonSection from './_component/buttonSection/ButtonSection';
+import Dots from './_component/buttonSection/Dots';
 
 export default function LessonPage({ params }: { params: { id: string } }) {
   const { data: session, status } = useSession();
@@ -52,19 +53,27 @@ export default function LessonPage({ params }: { params: { id: string } }) {
           authorImage={planner.data.authorThumbnailImage}
           createdAt={planner.data.created_dt}
         />
-        <div
-          className={
-            'desktop:fixed desktop:top-36 desktop:left-48 hidden laptop:block'
-          }
-        >
-          <ButtonSection
-            liked={planner.data.class_plan.liked}
-            likedCount={planner.data.class_plan.liked_count}
-            bookmarked={planner.data.class_plan.bookmarked}
-            bookmarkCount={planner.data.class_plan.bookmark_count}
-            postId={planner.data.document_id}
-            accessToken={session?.accessToken || ''}
-          />
+        <div className={'flex items-center'}>
+          <div
+            className={
+              'desktop:fixed desktop:top-36 desktop:left-48 hidden laptop:block'
+            }
+          >
+            <ButtonSection
+              liked={planner.data.class_plan.liked}
+              likedCount={planner.data.class_plan.liked_count}
+              bookmarked={planner.data.class_plan.bookmarked}
+              bookmarkCount={planner.data.class_plan.bookmark_count}
+              postId={planner.data.document_id}
+              accessToken={session?.accessToken || ''}
+            />
+          </div>
+          {planner.data.is_my_document && session && (
+            <Dots
+              id={planner.data.document_id}
+              accessToken={session.accessToken}
+            />
+          )}
         </div>
       </div>
       <LessonDetails planner={planner.data} />

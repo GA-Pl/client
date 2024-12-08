@@ -13,9 +13,8 @@ async function MainPage() {
   }
   return (
     <div>
+      <MainTop />
       <div className={'flex flex-col text-sm'}>
-        <MainTop />
-
         <div
           className={
             'flex flex-col desktop:flex-row tablet:flex-col laptop:flex-col justify-between w-full'

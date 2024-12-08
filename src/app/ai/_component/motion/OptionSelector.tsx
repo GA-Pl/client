@@ -23,7 +23,9 @@ const OptionSelector = ({
   questionKey,
   onRecommendOtherActivity,
 }: OptionSelectorProps) => {
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [showRecommendButton, setShowRecommendButton] = useState(false);
+
   useEffect(() => {
     if (questionKey === 'activity') {
       const timer = setTimeout(() => {
@@ -34,6 +36,11 @@ const OptionSelector = ({
     }
     return undefined;
   }, [questionKey]);
+
+  const handleOptionClick = (option: Option) => {
+    setSelectedOption(option.value);
+    onOptionSelect(option);
+  };
 
   const gridClass =
     questionKey === 'activity'
@@ -72,8 +79,10 @@ const OptionSelector = ({
             exit={'hidden'}
             custom={index}
             variants={itemVariants}
-            onClick={() => onOptionSelect(option)}
-            className={`${options.length > 1 ? 'option-button' : 'laptop:w-52 w-28'} m-1 p-1 laptop:m-2 laptop:p-2 border rounded flex flex-col items-center button-effect bg-white hover:bg-slate-200`}
+            onClick={() => handleOptionClick(option)}
+            className={`m-1 p-1 laptop:m-2 laptop:p-2 border rounded flex flex-col items-center button-effect bg-white hover:bg-slate-200 ${
+              selectedOption === option.value ? 'border-primary border-2' : ''
+            }`}
           >
             {hasImages && option.image ? (
               <>

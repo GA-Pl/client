@@ -6,6 +6,7 @@ import CustomItem from '@/_component/Item/CustomItem';
 import ActionButtons from '@/_component/Item/ActionButtons';
 import { IFeed } from '@/types/feed';
 import formatRelativeTime from '@/app/(main)/_lib/formatRelativeTime';
+import Link from 'next/link';
 import RecordSwiper from '../../record/_component/RecordSwiper';
 
 interface RecordItemProps {
@@ -41,30 +42,34 @@ const PlanItem = ({ data }: RecordItemProps) => {
         </div>
         <div className={'flex flex-col mb-2'}>
           <div className={'flex flex-col laptop:flex-row my-4'}>
-            <span
-              className={
-                'text-white bg-slate-700 px-3 py-1 rounded-full mr-2 font-light'
-              }
-            >
-              {data.age}
-              {'세'}
-            </span>
-            <span
-              className={
-                'text-white bg-slate-700 px-3 py-1 rounded-full mr-2 font-light'
-              }
-            >
-              {data.activity_type}
-            </span>
-            <span
-              className={
-                'text-white bg-slate-700 px-3 py-1 rounded-full font-light laptop:mt-0 mt-2'
-              }
-            >
-              {data.subject}
-            </span>
+            <div className={'flex'}>
+              <span
+                className={
+                  'text-white bg-slate-700 px-3 py-1 rounded-full mr-2 font-light'
+                }
+              >
+                {data.age}
+                {'세'}
+              </span>
+              <span
+                className={
+                  'text-white bg-slate-700 px-3 py-1 rounded-full mr-2 font-light'
+                }
+              >
+                {data.activity_type}
+              </span>
+            </div>
+            <div>
+              <span
+                className={
+                  'text-white bg-slate-700 px-3 py-1 rounded-full font-light laptop:mt-0 mt-2'
+                }
+                style={{ display: 'inline-block' }}
+              >
+                {data.subject}
+              </span>
+            </div>
           </div>
-          {/* RecordSwiper 조건부 렌더링 */}
           {data.images && data.images.length > 0 && (
             <RecordSwiper images={data.images} />
           )}
@@ -85,13 +90,15 @@ const PlanItem = ({ data }: RecordItemProps) => {
               </li>
             ))}
           </ul>
-          <span
-            className={
-              'flex justify-end mr-4 text-slate-600 hover:text-slate-400 text-sm'
-            }
-          >
-            {' ...더보기'}
-          </span>
+          <Link href={`/lessonDetail/${data.id}`} passHref>
+            <span
+              className={
+                'flex justify-end mr-4 text-slate-600 hover:text-slate-400 text-sm'
+              }
+            >
+              {' ...더보기'}
+            </span>
+          </Link>
         </div>
         <div className={'flex items-center py-1 text-blue-500 rounded-md mt-2'}>
           <Image

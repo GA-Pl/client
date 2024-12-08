@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import RecordSwiper from '@/app/profile/[id]/record/_component/RecordSwiper';
 import CommentSection from '@/app/lessonDetail/[id]/_component/commentSection/CommentSection';
+import Dots from '@/app/lessonDetail/[id]/_component/buttonSection/Dots';
 import { getLog } from '../_lib/getLog';
 
 export default function LogDetailPage({ params }: { params: { id: string } }) {
@@ -31,7 +32,7 @@ export default function LogDetailPage({ params }: { params: { id: string } }) {
 
   if (isLoading) {
     return (
-      <div className={'}flex justify-center items-center h-screen'}>
+      <div className={'flex justify-center items-center h-screen'}>
         {'로딩 중...'}
       </div>
     );
@@ -57,6 +58,8 @@ export default function LogDetailPage({ params }: { params: { id: string } }) {
   const {
     authorNickname,
     authorThumbnailImage,
+    is_my_document: isMyDocument,
+    document_id: documentId,
     class_log: { image, subject, activity_type: activityType, memo },
     created_dt: createdDt,
     viewCount,
@@ -70,20 +73,24 @@ export default function LogDetailPage({ params }: { params: { id: string } }) {
         'flex flex-col justify-center desktop:max-w-2xl laptop:max-w-xl max-w-sm mx-auto p-4 bg-white shadow rounded-lg'
       }
     >
-      <div className={'flex items-center space-x-4 mb-4'}>
-        <Image
-          src={authorThumbnailImage}
-          alt={`${authorNickname}의 프로필 이미지`}
-          className={'w-10 h-10 rounded-full object-cover'}
-          width={40}
-          height={40}
-        />
-        <div>
-          <p className={'font-semibold text-slate-800'}>{authorNickname}</p>
-          <p className={'text-sm text-slate-500'}>{formattedDate}</p>
+      <div className={'flex justify-between'}>
+        <div className={'flex items-center space-x-4 mb-4'}>
+          <Image
+            src={authorThumbnailImage}
+            alt={`${authorNickname}의 프로필 이미지`}
+            className={'w-10 h-10 rounded-full object-cover'}
+            width={40}
+            height={40}
+          />
+          <div>
+            <p className={'font-semibold text-slate-800'}>{authorNickname}</p>
+            <p className={'text-sm text-slate-500'}>{formattedDate}</p>
+          </div>
         </div>
+        {isMyDocument && session && (
+          <Dots id={documentId} accessToken={session.accessToken} />
+        )}
       </div>
-
       <div className={'mb-4'}>
         <p className={'text-slate-800 text-lg font-semibold'}>{subject}</p>
         <p className={'text-slate-600 text-sm mb-2'}>{activityType}</p>

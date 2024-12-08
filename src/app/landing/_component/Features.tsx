@@ -9,7 +9,7 @@ export default function Features() {
       </p>
       <div className={'mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 px-6'}>
         <FeatureCard
-          title={'AI 교육 계획ㄴ안 작성'}
+          title={'AI 교육 계획안 작성'}
           description={
             'AI를 활용하여 학생들에게 맞춤화된 교육 계획안을 몇 초 만에 작성하세요.'
           }

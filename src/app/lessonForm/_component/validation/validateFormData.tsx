@@ -38,12 +38,12 @@ export const validateFormData = (
   age: number,
   groupSize: string,
   activityType: string,
-  goals: Goal[],
-  tools: Tool[],
-  precautions: Precaution[],
-  evaluations: Evaluation[],
-  contents: ContentItem[],
-  curriculumComponents: CurriculumComponent[],
+  goals: Goal[] = [],
+  tools: Tool[] = [],
+  precautions: Precaution[] = [],
+  evaluations: Evaluation[] = [],
+  contents: ContentItem[] = [],
+  curriculumComponents: CurriculumComponent[] = [],
 ): boolean => {
   if (!title) {
     toast.error('활동명을 입력하세요.');
@@ -75,7 +75,7 @@ export const validateFormData = (
   }
   if (
     contents.length === 0 ||
-    !contents.some((content) => content.subtitle && content.contents.length > 0)
+    !contents.some((content) => content.subtitle && content.contents.length > 0) // 유효한 데이터가 없는 경우
   ) {
     toast.error('활동 내용을 입력하세요.');
     return false;

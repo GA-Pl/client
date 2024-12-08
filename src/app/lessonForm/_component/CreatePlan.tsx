@@ -151,19 +151,20 @@ export default function CreatePlan() {
   }));
 
   const formData = {
-    title,
-    subject,
-    detail_subject: detailSubject,
+    title: title.trim(),
+    subject: subject.trim(),
+    detail_subject: detailSubject.trim(),
     age,
-    image_id: imageId,
-    attachment_id: fileId,
-    attachmentId: fileId,
-    group_size: groupSize,
-    activity_type: activityType,
-    activity_goal: goals.map((goal) => goal.text),
-    activity_tool: tools.map((tool) => tool.value),
-    precautions: precautions.map((precaution) => precaution.text),
-    evaluation_criteria: evaluations.map((evaluation) => evaluation.text),
+    group_size: groupSize.trim(),
+    activity_type: activityType.trim(),
+    activity_goal: goals.map((goal) => goal.text).filter((text) => text),
+    activity_tool: tools.map((tool) => tool.value).filter((value) => value),
+    precautions: precautions
+      .map((precaution) => precaution.text)
+      .filter((text) => text),
+    evaluation_criteria: evaluations
+      .map((evaluation) => evaluation.text)
+      .filter((text) => text),
     activity_content: formattedContents,
 
     nuri_curriculum: curriculumComponents.map(
@@ -177,6 +178,8 @@ export default function CreatePlan() {
         content: component.selectedCurriculum,
       }),
     ),
+    image_id: imageId,
+    attachment_id: fileId,
   };
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {

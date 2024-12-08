@@ -4,6 +4,7 @@ import { useDropzone } from 'react-dropzone';
 import postFiles from '../../_lib/postFiles';
 
 interface ImageUploadProps {
+  initialImageUrls?: string[];
   imageId: number;
   setImageId: React.Dispatch<React.SetStateAction<number>>;
   id: string;
@@ -21,6 +22,7 @@ interface ImageWithPreview {
 }
 
 const ImageUploadSection = ({
+  initialImageUrls = [],
   setImageId,
   id,
   label,
@@ -28,6 +30,50 @@ const ImageUploadSection = ({
   accessToken,
 }: ImageUploadProps) => {
   const [images, setImages] = useState<ImageWithPreview[]>([]);
+
+  const convertUrlToFile = async (
+    url: string,
+    fileName: string,
+  ): Promise<File> => {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    return new File([blob], fileName, { type: blob.type });
+  };
+
+  useEffect(() => {
+    const loadInitialImages = async () => {
+      try {
+        // `initialImageUrls` 배열의 모든 URL을 비동기적으로 처리
+        const imagePromises = initialImageUrls.map((url) =>
+          convertUrlToFile(url, url.split('/').pop() || 'unknown').then(
+            (file) => ({
+              name: file.name,
+              preview: URL.createObjectURL(file),
+              size: file.size,
+              type: file.type,
+              file,
+            }),
+          ),
+        );
+
+        const preloadedImages = await Promise.all(imagePromises);
+
+        setImages((prevImages) => {
+          const existingNames = new Set(prevImages.map((img) => img.name));
+          const uniqueImages = preloadedImages.filter(
+            (img) => !existingNames.has(img.name),
+          );
+          return [...prevImages, ...uniqueImages];
+        });
+      } catch (error) {
+        console.error('Failed to load initial images:', error);
+      }
+    };
+
+    if (initialImageUrls.length > 0) {
+      loadInitialImages();
+    }
+  }, [initialImageUrls]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const newImages = acceptedFiles.map((file) => ({
@@ -59,6 +105,7 @@ const ImageUploadSection = ({
     setImages((currentImages) =>
       currentImages.filter((image) => image !== imageToDelete),
     );
+    URL.revokeObjectURL(imageToDelete.preview);
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
@@ -73,9 +120,10 @@ const ImageUploadSection = ({
       <div className={'relative w-24 h-24'}>
         <Image
           src={image.preview}
-          layout={'fill'}
-          objectFit={'cover'}
           alt={image.name}
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          width={100}
+          height={100}
         />
       </div>
       <button

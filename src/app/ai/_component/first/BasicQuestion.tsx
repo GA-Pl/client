@@ -28,6 +28,7 @@ const questions = [
 
 const BasicQuestion = ({ currentStep, setCurrentStep }: BasicQuestionProps) => {
   const [customSubject, setCustomSubject] = useState('');
+  const [retry, setRetry] = useState(false);
   const { data: session } = useSession();
   const accessToken = session?.accessToken;
 
@@ -77,19 +78,27 @@ const BasicQuestion = ({ currentStep, setCurrentStep }: BasicQuestionProps) => {
   const { question, options, field } = questions[currentStep];
 
   const handleGenerateAI = async () => {
+    setRetry(false);
     setLoading(true);
+
+    const previousStep = currentStep;
+
     if (accessToken && isCompleteAnswers(selectedAnswers)) {
       try {
         await addSubject(selectedAnswers);
-        console.log('AI generation initiated.');
+        setCurrentStep(4);
       } catch (error) {
         console.error('Failed to generate AI:', error);
+        setRetry(true);
+        setCurrentStep(previousStep);
       } finally {
-        setCurrentStep(4);
         setLoading(false);
       }
     } else {
       console.error('Missing required information or access token');
+      setRetry(true);
+      setCurrentStep(previousStep);
+      setLoading(false);
     }
   };
 
@@ -98,25 +107,27 @@ const BasicQuestion = ({ currentStep, setCurrentStep }: BasicQuestionProps) => {
       <TypingEffect text={question} />
       {field === 'subject' ? (
         <div className={'flex flex-col items-center mt-4'}>
-          <input
-            type={'text'}
-            value={customSubject}
-            onChange={handleCustomSubjectChange}
-            placeholder={'직접 주제를 입력하세요'}
-            className={'py-2 px-4 h-10 border border-gray-300 rounded'}
-          />
-          <button
-            type={'button'}
-            onClick={handleCustomSubjectSubmit}
-            disabled={!customSubject}
-            className={`py-2 px-4 h-10 mt-2 bg-blue-500 text-white rounded ${
-              customSubject
-                ? 'hover:bg-blue-700'
-                : 'bg-gray-300 cursor-not-allowed'
-            }`}
-          >
-            {'등록'}
-          </button>
+          <div className={'mb-4'}>
+            <input
+              type={'text'}
+              value={customSubject}
+              onChange={handleCustomSubjectChange}
+              placeholder={'직접 주제를 입력하세요'}
+              className={'py-2 px-4 h-10 border border-gray-300 rounded'}
+            />
+            <button
+              type={'button'}
+              onClick={handleCustomSubjectSubmit}
+              disabled={!customSubject}
+              className={`py-2 px-4 h-10 mt-2 bg-blue-500 text-white rounded ${
+                customSubject
+                  ? 'hover:bg-blue-700'
+                  : 'bg-gray-300 cursor-not-allowed'
+              }`}
+            >
+              {'등록'}
+            </button>
+          </div>
           <OptionSelector
             options={options}
             onOptionSelect={handleOptionSelect}
@@ -140,6 +151,23 @@ const BasicQuestion = ({ currentStep, setCurrentStep }: BasicQuestionProps) => {
         >
           {'AI 생성하기'}
         </button>
+      )}
+
+      {retry && (
+        <div className={'mt-4'}>
+          <p className={'text-red-500'}>
+            {'생성에 실패했습니다. 다시 시도해주세요.'}
+          </p>
+          <button
+            type={'button'}
+            onClick={handleGenerateAI}
+            className={
+              'py-2 px-4 bg-red-500 text-white rounded hover:bg-red-700'
+            }
+          >
+            {'다시 시도하기'}
+          </button>
+        </div>
       )}
     </div>
   );

@@ -19,40 +19,40 @@ export default function SideBar() {
   const MENU_ITEMS: MenuItemProps[] = [
     {
       name: '홈',
-      icon: '/icons/homeIcon.png',
-      activeIcon: '/icons/homeIconPink.png',
+      icon: '/menu/home.PNG',
+      activeIcon: '/menu/homeh.PNG',
       link: '/',
     },
 
     {
       name: '알림',
-      icon: '/icons/bellIcon.png',
-      activeIcon: '/icons/bellIconPink.png',
+      icon: '/menu/alarm.PNG',
+      activeIcon: '/menu/alarmh.PNG',
       link: '/notifications',
     },
     {
       name: '검색',
-      icon: '/icons/searchIcon.png',
-      activeIcon: '/icons/searchIconPink.png',
+      icon: '/menu/search.PNG',
+      activeIcon: '/menu/searchh.PNG',
       link: '/search',
     },
     {
       name: '기록',
-      icon: '/icons/heartIcon.png',
-      activeIcon: '/icons/heartIconPink.png',
+      icon: '/menu/record.PNG',
+      activeIcon: '/menu/recordh.PNG',
       link: '/createRecord',
     },
     {
-      name: '설정',
-      icon: '/icons/settingIcon.png',
-      activeIcon: '/icons/settingIconPink.png',
-      link: '/settings',
+      name: '계획안',
+      icon: '/menu/plan.PNG',
+      activeIcon: '/menu/planh.PNG',
+      link: '/lessonForm',
     },
     {
-      name: '로그인',
-      icon: '/icons/loginIcon.png',
-      activeIcon: '/icons/loginIconPink.png',
-      link: '/login',
+      name: 'AI',
+      icon: '/menu/ai.PNG',
+      activeIcon: '/menu/aih.PNG',
+      link: '/ai',
     },
   ];
 
@@ -124,9 +124,7 @@ export default function SideBar() {
             />
           ))}
         </div>
-        <div className={'hidden laptop:block'}>
-          {!isSearchPage && <CreatePlusBtn />}
-        </div>
+
         <div className={'hidden laptop:block'}>
           {!isSearchPage && <ProfileIcon />}
         </div>

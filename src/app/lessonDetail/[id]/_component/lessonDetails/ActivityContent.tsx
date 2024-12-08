@@ -1,21 +1,29 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface ActivityContentProps {
   contents: {
     subtitle: string;
     content: string;
   }[];
+  forceExpandAll: boolean;
 }
 
-const ActivityContent = ({ contents }: ActivityContentProps) => {
+const ActivityContent = ({
+  contents,
+  forceExpandAll,
+}: ActivityContentProps) => {
   const [expanded, setExpanded] = useState<boolean[]>(
     Array(contents.length)
       .fill(false)
       .map((_, index) => index === 0),
   );
   const [allExpanded, setAllExpanded] = useState(false);
+
+  useEffect(() => {
+    setExpanded(Array(contents.length).fill(forceExpandAll));
+  }, [forceExpandAll, contents.length]);
 
   const toggleContent = (index: number) => {
     const newExpanded = [...expanded];

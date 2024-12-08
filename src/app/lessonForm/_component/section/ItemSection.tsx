@@ -53,6 +53,10 @@ const ItemSection = ({
     }
   }, [items.length]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <h1 className={'title-effect'}>{title}</h1>

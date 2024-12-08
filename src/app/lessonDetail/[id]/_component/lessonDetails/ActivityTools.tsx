@@ -7,12 +7,18 @@ interface ActivityToolProps {
 const ActivityTool = ({ tools }: ActivityToolProps) => {
   return (
     <div className={'my-4'}>
-      <h2 className={'text-lg font-semibold'}>{'활동 도구'}</h2>
-      <div className={'flex list-disc list-inside'}>
+      <h2 className={'text-lg font-semibold mb-4'}>{'활동 도구'}</h2>
+      <div
+        className={
+          'grid laptop:gap-4 gap-2 grid-cols-3 laptop:grid-cols-4 text-xs laptop:text-xs'
+        }
+      >
         {tools.map((tool) => (
           <span
             key={uuidv4()}
-            className={'bg-gray-700 text-white mt-2 mr-2 px-4 rounded-full'}
+            className={
+              'bg-slate-700 text-white rounded-md py-2 px-4 text-center'
+            }
           >
             {tool}
           </span>

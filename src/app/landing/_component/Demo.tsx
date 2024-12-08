@@ -46,6 +46,7 @@ function DemoCard({
           }
           width={200}
           height={200}
+          unoptimized
         />
       </div>
       <h3 className={'mt-4 text-lg font-semibold text-slate-800'}>{title}</h3>
