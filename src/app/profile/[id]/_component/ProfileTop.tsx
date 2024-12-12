@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import FollowList from './FollowList';
 import UserInfo from './UserInfo';
-import { useUserInfo } from '../../_lib/useUserInfo'; // Ensure it's correctly imported
+import { useUserInfo } from '../../_lib/useUserInfo';
 import { useFollowers, useFollowing } from '../../_lib/useFollow';
 
 const ProfileTop = () => {

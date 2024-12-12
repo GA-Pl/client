@@ -4,13 +4,15 @@ const nextConfig = {
     return [
       {
         source: '/:path*',
-        has: [
-          {
-            type: 'host',
-            value: 'gapple-client.vercel.app',
-          },
-        ],
-        destination: 'https://gapple-ai.io/:path*',
+        has: [{ type: 'host', value: 'gapple-client.vercel.app' }],
+        destination: 'https://www.gapple-ai.io/:path*',
+        permanent: true,
+      },
+
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'gapple-ai.io' }],
+        destination: 'https://www.gapple-ai.io/:path*',
         permanent: true,
       },
     ];

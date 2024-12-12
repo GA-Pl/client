@@ -1,4 +1,5 @@
 export interface IProfileData {
+  email?: string;
   nickname: string;
   profileImg: string;
   level?: string;

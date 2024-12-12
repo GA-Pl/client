@@ -35,18 +35,15 @@ const UserInfo = ({
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
 
-  // 로딩 중 상태 처리
   if (status === 'loading' || isLoading) {
     return <Loader />;
   }
 
-  // 인증되지 않은 상태 또는 API 에러 처리
   if (status !== 'authenticated' || isError) {
     console.error('Authentication or data fetching error:', error);
     return <div>{'사용자 정보를 불러올 수 없습니다.'}</div>;
   }
 
-  // userInfo가 비어있을 때 처리
   if (!userInfo) {
     return <div>{'사용자 정보가 없습니다.'}</div>;
   }
@@ -59,7 +56,7 @@ const UserInfo = ({
     >
       <div className={'relative w-36 h-36 rounded-full'}>
         <Image
-          src={userInfo.profileImg || '/images/gappler.png'} // 안전한 기본값 처리
+          src={userInfo.profileImg || '/images/gappler.png'}
           alt={'Profile'}
           width={150}
           height={150}
@@ -76,9 +73,7 @@ const UserInfo = ({
         <h1 className={'text-xl font-semibold text-slate-800'}>
           {userInfo.nickname || '닉네임 없음'}
         </h1>
-        <div className={'text-sm text-slate-500'}>
-          {userInfo.level || 'Level Info'}
-        </div>
+        <div className={'text-sm text-slate-500'}>{userInfo.email}</div>
         <div className={'text-sm text-slate-600 mt-2'}>
           {userInfo.selfIntro || '교육의 가치를 믿습니다!'}
         </div>
