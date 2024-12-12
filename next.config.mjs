@@ -1,5 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'gapple-client.vercel.app',
+          },
+        ],
+        destination: 'https://gapple-ai.io/:path*',
+        permanent: true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
@@ -17,6 +32,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'gapple-files.s3.ap-northeast-2.amazonaws.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'gapple-ai.io',
       },
       {
         protocol: 'https',

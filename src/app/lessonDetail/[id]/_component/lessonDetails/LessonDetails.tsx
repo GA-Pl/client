@@ -83,7 +83,7 @@ const LessonDetails = ({ planner }: { planner: IPlanner }) => {
               </div>
             ))
           ) : (
-            <div className="flex py-2">
+            <div className={'flex py-2'}>
               <Image
                 src={'/icons/idea.png'}
                 width={20}
@@ -96,7 +96,7 @@ const LessonDetails = ({ planner }: { planner: IPlanner }) => {
           )}
         </GoalTable>
         <NuriCurriculum curriculum={planner.class_plan.nuri_curriculum} />
-        <div className="flex justify-between my-4">
+        <div className={'flex justify-between my-4'}>
           <ActivityTool tools={planner.class_plan.activity_tool} />
         </div>
         <ActivityContent
