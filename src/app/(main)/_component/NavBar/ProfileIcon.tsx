@@ -12,11 +12,7 @@ const DropdownMenu = () => {
     return null;
   }
   return (
-    <div
-      className={
-        'absolute left-12 mt-2 py-2 w-24 bg-white rounded-lg shadow-xl'
-      }
-    >
+    <div className={'absolute mt-2 py-2 w-24 bg-white rounded-lg shadow-xl'}>
       <Link
         href={`/profile/${session.userId}/plan`}
         className={
@@ -98,6 +94,7 @@ const ProfileIcon = () => {
 
   return (
     <div className={'flex items-center justify-center m-4 relative'}>
+      {/* Profile Button */}
       <button
         type={'button'}
         onClick={() => setMenuVisible(!menuVisible)}
@@ -116,8 +113,14 @@ const ProfileIcon = () => {
           }}
         />
       </button>
+
       {menuVisible && (
-        <div ref={menuRef}>
+        <div
+          ref={menuRef}
+          className={
+            'absolute top-full left-1/2 transform -translate-x-1/2 mt-2 py-2 w-32'
+          }
+        >
           <DropdownMenu />
         </div>
       )}
