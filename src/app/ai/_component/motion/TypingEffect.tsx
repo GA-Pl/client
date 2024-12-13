@@ -23,7 +23,7 @@ const TypingEffect = React.memo(({ text = '' }: TypingEffectProps) => {
       {charactersWithUUID.map(({ char, id }, index) => (
         <motion.span
           key={id}
-          className={'text-xl'}
+          className={'laptop:text-xl'}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{

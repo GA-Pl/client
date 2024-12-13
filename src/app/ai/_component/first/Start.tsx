@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { greetings } from '@/_lib/constants/greetings';
+import Image from 'next/image';
 import TypingEffect from '../motion/TypingEffect';
 import MotionButton from '../motion/MotionButton';
 import Loader from '../loader/Loader';
@@ -55,10 +56,18 @@ const Start = ({ onProceed }: StartProps) => {
   const introText = `${greeting} ${seasonSuffix} ${session.user.name} 쌤!\nAI 교육계획안을 작성해드리는 GAPPLE 입니다!`;
 
   return (
-    <div className={'flex flex-col w-100 text-xl m-2'}>
+    <div className={'flex flex-col w-100 laptop:text-xl text-base m-2'}>
       <div className={'mb-4'}>{'안녕하세요!'}</div>
       <TypingEffect text={introText} />
-      <div className={'flex mx-auto mt-[40dvh]'}>
+      <div className={'flex flex-col mx-auto '}>
+        <div className={'mb-[5dvh]'}>
+          <Image
+            src={'/images/aiStart.png'}
+            width={200}
+            height={200}
+            alt={'ai-start'}
+          />
+        </div>
         <MotionButton onClick={onProceed} />
       </div>
     </div>

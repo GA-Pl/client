@@ -14,6 +14,7 @@ export default function SideBar() {
   const isLoggedIn = status === 'authenticated';
 
   const isSearchPage = pathname === '/search';
+  const isRecordPage = pathname === '/createRecord';
 
   const MENU_ITEMS: MenuItemProps[] = [
     {
@@ -81,7 +82,7 @@ export default function SideBar() {
       </div>
       <div
         className={`flex w-dvw justify-center bg-opacity-300 bg-white border-b fixed bottom-0 desktop:left-0 desktop:top-0 desktop:bottom-0 desktop:flex-col desktop:h-dvh desktop:w-36 laptop:w-20 laptop:flex-col laptop:items-center laptop:justify-start laptop:h-dvh tablet:fixed tablet:top-auto tablet:left-0 tablet:right-0 tablet:bottom-0 tablet:h-16 tablet:flex-row tablet:items-center tablet:justify-around sidebar-transition z-20
-          ${isSearchPage ? 'bg-slate-800 bg-opacity-5 pointer-events-none z-40' : ''}`}
+          ${isSearchPage || isRecordPage ? 'bg-slate-800 bg-opacity-5 pointer-events-none z-40' : ''}`}
       >
         <Link
           href={'/'}
@@ -125,7 +126,7 @@ export default function SideBar() {
         </div>
 
         <div className={'hidden laptop:block'}>
-          {!isSearchPage && <ProfileIcon />}
+          {!isSearchPage && !isRecordPage && <ProfileIcon />}
         </div>
       </div>
     </>

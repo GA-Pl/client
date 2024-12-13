@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation'; // usePathname 추가
 import deletePlanner from '@/app/lessonDetail/_lib/deletePlanner';
 
 const ConfirmDeleteToast = ({
@@ -55,6 +55,7 @@ const Dots = ({ id, accessToken }: { id: number; accessToken: string }) => {
   const [isHovered, setIsHovered] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const pathname = usePathname(); // 현재 경로 확인
 
   useEffect(() => {
     function handleOutsideClick(event: MouseEvent) {
@@ -90,12 +91,18 @@ const Dots = ({ id, accessToken }: { id: number; accessToken: string }) => {
     );
   };
 
+  // 기본 메뉴 항목
   const menuItems = [
     {
       name: '수정하기',
       onClick: () => router.push(`/updatePlan/${id}`), // Navigate to the update page
     },
   ];
+
+  // URL이 "/log/"를 포함하는 경우, "수정하기"를 제거
+  const filteredMenuItems = pathname.includes('/log/')
+    ? [] // "수정하기" 제거
+    : menuItems;
 
   return (
     <div className={'relative'} ref={containerRef}>
@@ -122,7 +129,7 @@ const Dots = ({ id, accessToken }: { id: number; accessToken: string }) => {
             'absolute right-0 w-32 bg-white shadow-lg mt-2 rounded-md z-10 text-sm'
           }
         >
-          {menuItems.map((item) => (
+          {filteredMenuItems.map((item) => (
             <button
               key={item.name}
               type={'button'}

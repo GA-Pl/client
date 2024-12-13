@@ -11,7 +11,7 @@ const LogFeed = ({ log }: LogProps) => {
   return (
     <Link href={`/log/${log.id}`}>
       <div className={'p-4'}>
-        <div className={'flex my-2'}>
+        <div className={'flex my-2 ml-4'}>
           <span
             className={
               'text-white bg-slate-700 px-3 py-1 mr-2 rounded-full font-light'

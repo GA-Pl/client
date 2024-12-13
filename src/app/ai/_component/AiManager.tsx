@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Snowfall from 'react-snowfall';
 import Start from './first/Start';
 import BasicQuestion from './first/BasicQuestion';
 import GeneratingSubject from './loader/GeneratingSubject';
@@ -32,7 +33,8 @@ const AiManager = () => {
   const handleProceed = () => setCurrentStep(0);
 
   return (
-    <div className={'flex flex-col justify-center items-center mt-16'}>
+    <div className={'flex flex-col justify-center items-center mt-8'}>
+      {currentStep !== 7 && <Snowfall color={'white'} snowflakeCount={200} />}
       {currentStep === -1 && <Start onProceed={handleProceed} />}
       {currentStep >= 0 && currentStep <= 3 && (
         <BasicQuestion
