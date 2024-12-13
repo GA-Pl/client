@@ -22,7 +22,7 @@ function ThemeCard({ rank, name }: { rank: number; name: string }) {
   return (
     <motion.div
       className={
-        'border bg-gradient-to-r from-indigo-100 via-white to-white p-4 rounded-lg shadow-sm flex items-center justify-between font-pretendard'
+        'border bg-gradient-to-r from-slate-200 via-white to-white p-4 rounded-lg shadow-sm flex items-center justify-between font-pretendard'
       }
       variants={cardVariants}
       initial={'hidden'}
@@ -34,7 +34,7 @@ function ThemeCard({ rank, name }: { rank: number; name: string }) {
       }}
     >
       <motion.div
-        className={'text-xl font-bold text-indigo-400'}
+        className={'text-xl font-bold text-slate-500'}
         animate={{ scale: [1, 1.1, 1] }}
         transition={{
           repeat: Infinity,

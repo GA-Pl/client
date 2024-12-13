@@ -7,7 +7,6 @@ import { usePathname } from 'next/navigation';
 import { MenuItemProps } from '@/types/menu';
 import MenuItem from './MenuItem';
 import ProfileIcon from './ProfileIcon';
-import CreatePlusBtn from './CreatePlusBtn';
 
 export default function SideBar() {
   const { status } = useSession();
@@ -76,7 +75,7 @@ export default function SideBar() {
             />
           </Link>
           <div className={'cursor-pointer m-4'}>
-            <CreatePlusBtn />
+            <ProfileIcon />
           </div>
         </div>
       </div>

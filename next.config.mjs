@@ -32,6 +32,10 @@ const nextConfig = {
         hostname: 'img1.kakaocdn.net',
       },
       {
+        protocol: 'http',
+        hostname: 'img1.kakaocdn.net',
+      },
+      {
         protocol: 'https',
         hostname: 'gapple-files.s3.ap-northeast-2.amazonaws.com',
       },
@@ -45,6 +49,10 @@ const nextConfig = {
       },
       {
         protocol: 'http',
+        hostname: 'k.kakaocdn.net',
+      },
+      {
+        protocol: 'https',
         hostname: 'k.kakaocdn.net',
       },
     ],
