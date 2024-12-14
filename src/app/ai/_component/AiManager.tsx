@@ -34,7 +34,7 @@ const AiManager = () => {
 
   return (
     <div className={'flex flex-col justify-center items-center mt-8'}>
-      {currentStep !== 7 && <Snowfall color={'white'} snowflakeCount={200} />}
+      {currentStep !== 7 && <Snowfall color={'skyblue'} snowflakeCount={200} />}
       {currentStep === -1 && <Start onProceed={handleProceed} />}
       {currentStep >= 0 && currentStep <= 3 && (
         <BasicQuestion

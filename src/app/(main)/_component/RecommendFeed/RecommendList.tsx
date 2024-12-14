@@ -37,20 +37,30 @@ function RecommendList() {
       title: '호두까기 인형',
       sentence: '피오나 와트 · 어스본코리아',
     },
+    {
+      profileImg:
+        'https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791158363925.jpg',
+      link: 'https://product.kyobobook.co.kr/detail/S000200645174',
+      title: '네 기분은 어떤 색깔이니?',
+      sentence: '최숙희',
+    },
   ];
   return (
     <div>
       <h2 className={'mt-8 mb-4 font-bold'}>{'📚 이런 동화책은 어떠세요'}</h2>
-      {data.map((item) => (
-        <RecommendCard
-          key={item.title}
-          profileImg={item.profileImg}
-          title={item.title}
-          sentence={item.sentence}
-          link={item.link}
-        />
-      ))}
+      <div className={'grid grid-cols-2 gap-4'}>
+        {data.map((item) => (
+          <RecommendCard
+            key={item.title}
+            profileImg={item.profileImg}
+            title={item.title}
+            sentence={item.sentence}
+            link={item.link}
+          />
+        ))}
+      </div>
     </div>
   );
 }
+
 export default RecommendList;

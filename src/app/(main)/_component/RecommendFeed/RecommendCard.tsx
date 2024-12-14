@@ -22,23 +22,18 @@ function RecommendCard({
       target={'_blank'}
       rel={'noopener noreferrer'}
       className={
-        'flex flex-col bg-white p-4 shadow rounded-lg mb-4 items-center space-x-4 transition-transform duration-300 transform hover:scale-105 hover:shadow-lg'
+        'flex flex-col bg-white shadow rounded-lg hover:shadow-lg overflow-hidden transform hover:scale-105'
       }
       whileHover={{ scale: 1.05 }}
+      style={{ aspectRatio: '1 / 1' }}
     >
-      <div className={'grid grid-cols-[15%_85%] items-center w-full'}>
-        <Image
-          src={profileImg}
-          alt={'그림'}
-          className={'w-8 h-8 rounded-full shadow-md'}
-          width={100}
-          height={100}
-        />
-
-        <h3 className={'font-semibold ml-2 text-slate-800'}>{title}</h3>
+      <div className={'relative w-full h-[60%]'}>
+        <Image src={profileImg} alt={'그림'} fill className={'object-cover'} />
       </div>
-
-      <p className={'text-slate-600'}>{sentence}</p>
+      <div className={'p-4 flex flex-col justify-between h-[40%]'}>
+        <h3 className={'font-semibold text-slate-800 text-sm mb-2'}>{title}</h3>
+        <p className={'text-slate-600 text-xs'}>{sentence}</p>
+      </div>
     </motion.a>
   );
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 interface ActivityContentProps {
   contents: {
@@ -66,13 +67,17 @@ const ActivityContent = ({
               expanded[index] ? 'max-h-screen' : 'max-h-0'
             }`}
           >
-            <p
-              className={
-                'text-gray-700 whitespace-pre-line break-words mt-4 pb-2'
-              }
-            >
-              {content.content}
-            </p>
+            {content.content.split('\n').map((line) => (
+              <p
+                key={uuidv4()}
+                className={
+                  'text-gray-700 whitespace-pre-line break-words mt-4 pb-2'
+                }
+              >
+                {'- '}
+                {line}
+              </p>
+            ))}
           </div>
         </div>
       ))}

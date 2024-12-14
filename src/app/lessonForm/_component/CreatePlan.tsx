@@ -182,6 +182,8 @@ export default function CreatePlan() {
     attachment_id: fileId,
   };
 
+  console.log('formData', formData);
+
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
@@ -242,17 +244,22 @@ export default function CreatePlan() {
           'space-y-6 bg-white p-6 rounded-lg shadow-md mt-4 mb-16 laptop:mt-0 laptop:mb-0 flex flex-col w-full max-w-4xl mx-auto'
         }
       >
-        <div>
-          <input
-            type={'text'}
-            name={'title'}
-            value={title}
-            ref={titleInputRef}
-            onChange={(e) => setTitle(e.target.value)}
-            className={'text-xl laptop:text-3xl focus:outline-none w-full'}
-            placeholder={'활동명을 입력하세요 '}
-          />
-        </div>
+        <input
+          type={'text'}
+          name={'title'}
+          value={title}
+          ref={titleInputRef}
+          onChange={(e) => {
+            console.log('Input Value:', e.target.value);
+            e.stopPropagation();
+            setTitle(e.target.value);
+          }}
+          className={
+            'text-xl laptop:text-3xl focus:outline-none w-full z-50 bg-transparent'
+          }
+          placeholder={'활동명을 입력하세요 '}
+        />
+
         <SubjectInputSection
           subject={subject}
           detailSubject={detailSubject}

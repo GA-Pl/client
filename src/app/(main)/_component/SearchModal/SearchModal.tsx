@@ -34,7 +34,7 @@ export default function SearchModal() {
   return (
     <div
       className={
-        'fixed top-0 left-0 w-full h-full bg-slate-800 bg-opacity-85 flex justify-center items-center z-10'
+        'fixed top-0 left-0 w-full h-full bg-slate-800 bg-opacity-85 flex justify-center items-center z-50'
       }
       onClick={router.back}
     >

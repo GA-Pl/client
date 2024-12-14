@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
-import { useRouter, usePathname } from 'next/navigation'; // usePathname 추가
+import { useRouter, usePathname } from 'next/navigation';
 import deletePlanner from '@/app/lessonDetail/_lib/deletePlanner';
 
 const ConfirmDeleteToast = ({
@@ -91,18 +91,14 @@ const Dots = ({ id, accessToken }: { id: number; accessToken: string }) => {
     );
   };
 
-  // 기본 메뉴 항목
   const menuItems = [
     {
       name: '수정하기',
-      onClick: () => router.push(`/updatePlan/${id}`), // Navigate to the update page
+      onClick: () => router.push(`/updatePlan/${id}`),
     },
   ];
 
-  // URL이 "/log/"를 포함하는 경우, "수정하기"를 제거
-  const filteredMenuItems = pathname.includes('/log/')
-    ? [] // "수정하기" 제거
-    : menuItems;
+  const filteredMenuItems = pathname.includes('/log/') ? [] : menuItems;
 
   return (
     <div className={'relative'} ref={containerRef}>

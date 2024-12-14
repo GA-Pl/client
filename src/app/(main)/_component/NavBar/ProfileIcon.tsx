@@ -118,7 +118,7 @@ const ProfileIcon = () => {
         <div
           ref={menuRef}
           className={
-            'absolute top-full left-1/2 transform -translate-x-1/2 mt-2 py-2 w-32'
+            'absolute top-[-40px] left-full ml-2 py-2 w-32 z-10 laptop:top-[-15px]'
           }
         >
           <DropdownMenu />

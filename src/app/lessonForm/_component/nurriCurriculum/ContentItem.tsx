@@ -47,8 +47,11 @@ const ContentItem = ({
           ref={provided.innerRef}
           // eslint-disable-next-line react/jsx-props-no-spreading
           {...provided.draggableProps}
-          className={`mb-4 p-4 border border-slate-100 shadow-sm ${snapshot.isDragging ? 'bg-primary100' : ''}`}
+          className={`mb-4 p-4 border border-slate-100 shadow-sm ${
+            snapshot.isDragging ? 'bg-primary100' : ''
+          }`}
         >
+          {/* Header */}
           <div className={'flex justify-between'}>
             <div
               // eslint-disable-next-line react/jsx-props-no-spreading
@@ -80,8 +83,7 @@ const ContentItem = ({
               </button>
             )}
           </div>
-
-          <div className={'flex items-center mb-2'}>
+          <div className={'flex items-center mb-2 relative'}>
             <label
               htmlFor={`subtitle-${index}`}
               className={
@@ -90,17 +92,27 @@ const ContentItem = ({
             >
               {index + 1}
             </label>
-            <input
-              id={`subtitle-${index}`}
-              value={content.subtitle}
-              onChange={(e) =>
-                handleContentChange(content.id, 'subtitle', e.target.value)
-              }
-              className={
-                'block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary'
-              }
-              placeholder={'소제목을 입력하세요'}
-            />
+            <div className={'relative w-full'}>
+              <input
+                id={`subtitle-${index}`}
+                value={content.subtitle}
+                onChange={(e) => {
+                  if (e.target.value.length <= 100) {
+                    handleContentChange(content.id, 'subtitle', e.target.value);
+                  }
+                }}
+                className={
+                  'block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary'
+                }
+                placeholder={'소제목을 입력하세요'}
+              />
+              <span
+                className={'absolute top-[-2dvh] left-2 text-xs text-gray-500'}
+              >
+                {content.subtitle.length}
+                {'/100'}
+              </span>
+            </div>
           </div>
 
           <Droppable droppableId={content.id} type={'nested'}>
@@ -112,7 +124,9 @@ const ContentItem = ({
                 ref={provided.innerRef}
                 // eslint-disable-next-line react/jsx-props-no-spreading
                 {...provided.droppableProps}
-                className={`p-2 ${snapshot.isDraggingOver ? 'bg-gray-100' : 'bg-white'}`}
+                className={`p-2 ${
+                  snapshot.isDraggingOver ? 'bg-gray-100' : 'bg-white'
+                }`}
               >
                 {content?.contents?.map((item, contentIndex) => (
                   <Draggable
@@ -125,7 +139,7 @@ const ContentItem = ({
                         ref={provided.innerRef}
                         // eslint-disable-next-line react/jsx-props-no-spreading
                         {...provided.draggableProps}
-                        className={'flex items-center mb-2'}
+                        className={'flex items-center mb-2 relative'}
                       >
                         {content.contents.length > 1 && (
                           <button
@@ -143,22 +157,37 @@ const ContentItem = ({
                             />
                           </button>
                         )}
-
-                        <textarea
-                          value={item.text}
-                          onChange={(e) =>
-                            handleItemContentChange(
-                              content.id,
-                              contentIndex,
-                              e.target.value,
-                            )
-                          }
-                          className={
-                            'block w-full h-16 px-3 py-2 border mt-2 border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary'
-                          }
-                          rows={3}
-                          placeholder={`교사발문 ${contentIndex + 1}`}
-                        />
+                        <div className={'relative w-full'}>
+                          <textarea
+                            value={item.text}
+                            onChange={(e) => {
+                              const transformedValue = e.target.value.replace(
+                                /\n/g,
+                                ' ',
+                              );
+                              if (transformedValue.length <= 255) {
+                                handleItemContentChange(
+                                  content.id,
+                                  contentIndex,
+                                  transformedValue,
+                                );
+                              }
+                            }}
+                            className={
+                              'block w-full h-16 px-3 py-2 border mt-2 border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary'
+                            }
+                            rows={3}
+                            placeholder={`교사발문 ${contentIndex + 1}`}
+                          />
+                          <span
+                            className={
+                              'absolute bottom-[-2dvh] right-2 text-xs text-gray-500'
+                            }
+                          >
+                            {item.text.length}
+                            {'/255'}
+                          </span>
+                        </div>
                         <div
                           // eslint-disable-next-line react/jsx-props-no-spreading
                           {...provided.dragHandleProps}
@@ -180,6 +209,7 @@ const ContentItem = ({
             )}
           </Droppable>
 
+          {/* Add New Item */}
           <button
             type={'button'}
             onClick={() => addItemContent(content.id)}
