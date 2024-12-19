@@ -23,9 +23,12 @@ import EvaluationsSection from '@/app/lessonForm/_component/section/EvaluationSe
 import SaveButtons from '@/app/lessonForm/_component/section/SaveButtonsSection';
 import submitLessonForm from '@/app/lessonForm/_lib/api';
 import { validateFormData } from '@/app/lessonForm/_component/validation/validateFormData';
+import modifyDraft from '@/app/drafts/_lib/modifyDraft';
+import postDraft from '@/app/lessonForm/_lib/postDraft';
 import { useSubjectStore } from '../../_store/useSubjectStore';
 
 export default function AiPlan() {
+  const [draftId, setDraftId] = useState<number | null>(null);
   const { selectedAnswers, documentData } = useSubjectStore();
   const { data: session } = useSession();
   const [title, setTitle] = useState('');
@@ -228,14 +231,27 @@ export default function AiPlan() {
 
   const handleTempSave = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+
+    if (!formData.title || formData.title.trim() === '') {
+      toast.error('임시 저장을 위해 제목을 입력해주세요.');
+      return;
+    }
+
     setIsSaving(true);
+
     try {
-      toast.success('임시 저장 성공!');
+      if (!draftId) {
+        const result = await postDraft(formData, session?.accessToken || '');
+        setDraftId(result.data);
+        toast.success('임시 저장 성공!');
+        console.log('Draft created with ID:', result.data);
+      } else {
+        await modifyDraft(formData, session?.accessToken || '', draftId);
+        toast.success('임시 저장이 업데이트되었습니다!');
+      }
     } catch (error) {
       toast.error('임시 저장 실패!');
-      if (error) {
-        console.error(error);
-      }
+      console.error('임시 저장 중 오류 발생:', error);
     } finally {
       setIsSaving(false);
     }

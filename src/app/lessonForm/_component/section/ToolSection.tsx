@@ -17,7 +17,7 @@ const ToolSection = ({ tools, setTools }: ToolSectionProps) => {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const addTool = () => {
-    if (tools.length < 10 && !isAdding) {
+    if (tools?.length < 10 && !isAdding) {
       setIsAdding(true);
       setTimeout(() => {
         const newTool = { id: uuidv4(), value: '' };
@@ -28,7 +28,7 @@ const ToolSection = ({ tools, setTools }: ToolSectionProps) => {
   };
 
   const handleToolChange = (id: string, value: string) => {
-    const newTools = tools.map((tool) => {
+    const newTools = tools?.map((tool) => {
       if (tool.id === id) {
         return { ...tool, value };
       }
@@ -47,13 +47,13 @@ const ToolSection = ({ tools, setTools }: ToolSectionProps) => {
     if (lastInput) {
       lastInput.focus();
     }
-  }, [tools.length]);
+  }, [tools?.length]);
 
   return (
     <>
       <h1 className={'title-effect'}>{'활동 도구'}</h1>
       <div className={'grid laptop:grid-cols-4 grid-cols-2 gap-5'}>
-        {tools.map((tool, index) => (
+        {tools?.map((tool, index) => (
           <div key={tool.id} className={'flex items-center space-x-2'}>
             <ToolInput
               label={`도구 ${index + 1}`}
@@ -66,7 +66,7 @@ const ToolSection = ({ tools, setTools }: ToolSectionProps) => {
                 inputRefs.current[index] = el;
               }}
             />
-            {tools.length !== 1 && (
+            {tools?.length !== 1 && (
               <button
                 type={'button'}
                 onClick={() => removeTool(tool.id)}
@@ -77,7 +77,7 @@ const ToolSection = ({ tools, setTools }: ToolSectionProps) => {
             )}
           </div>
         ))}
-        {tools.length < 10 && (
+        {tools?.length < 10 && (
           <button
             type={'button'}
             onClick={addTool}

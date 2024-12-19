@@ -21,6 +21,14 @@ const DropdownMenu = () => {
       >
         {'내 프로필'}
       </Link>
+      <Link
+        href={`/drafts`}
+        className={
+          'block px-4 py-2 text-center text-sm text-slate-700 hover:bg-slate-100'
+        }
+      >
+        {'임시저장'}
+      </Link>
       <button
         type={'button'}
         onClick={(e) => {
@@ -28,7 +36,7 @@ const DropdownMenu = () => {
           signOut();
         }}
         className={
-          'block px-4 py-2 w-full text-sm text-slate-700 hover:bg-slate-100'
+          'block px-4 py-2 w-full text-sm text-red-700 hover:bg-slate-100'
         }
       >
         {'로그아웃'}
@@ -118,7 +126,7 @@ const ProfileIcon = () => {
         <div
           ref={menuRef}
           className={
-            'absolute top-[-40px] left-full ml-2 py-2 w-32 z-10 laptop:top-[-15px]'
+            'absolute top-[-85px] left-full ml-2 py-2 w-32 z-10 laptop:top-[-50px]'
           }
         >
           <DropdownMenu />

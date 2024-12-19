@@ -26,10 +26,15 @@ const putPlanner = async (
     Authorization: `Bearer ${accessToken}`,
   };
 
+  const requestBody = {
+    ...formData,
+    isDraft: false,
+  };
+
   try {
     const response = await axios.put(
       `${BASE_NEXT_URL}/api/document/lessonDetail/${id}`,
-      formData,
+      requestBody,
       {
         headers,
       },

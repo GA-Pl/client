@@ -107,7 +107,7 @@ const ContentItem = ({
                 placeholder={'소제목을 입력하세요'}
               />
               <span
-                className={'absolute top-[-2dvh] left-2 text-xs text-gray-500'}
+                className={'absolute top-[-3dvh] left-2 text-xs text-slate-300'}
               >
                 {content.subtitle.length}
                 {'/100'}
@@ -181,7 +181,7 @@ const ContentItem = ({
                           />
                           <span
                             className={
-                              'absolute bottom-[-2dvh] right-2 text-xs text-gray-500'
+                              'absolute bottom-[-3dvh] right-2 text-xs text-slate-300'
                             }
                           >
                             {item.text.length}

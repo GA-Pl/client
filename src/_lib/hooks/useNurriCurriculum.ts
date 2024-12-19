@@ -3,8 +3,15 @@
 import { useState } from 'react';
 
 export const useCurriculumHandlers = (initialState: any) => {
-  const [curriculumComponents, setCurriculumComponents] =
-    useState(initialState);
+  const defaultComponent = {
+    selectedNurri: '',
+    selectedSubNurri: '',
+    selectedCurriculum: '',
+  };
+
+  const [curriculumComponents, setCurriculumComponents] = useState(
+    initialState.length > 0 ? initialState : [defaultComponent], // 초기값이 없으면 기본값 추가
+  );
 
   const handleNurriClick = (index: number | bigint | string, nurri: string) => {
     setCurriculumComponents((current: any[]) =>

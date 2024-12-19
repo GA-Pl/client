@@ -25,7 +25,7 @@ const ItemSection = ({
   const [isAdding, setIsAdding] = useState(false);
 
   const addItem = () => {
-    if (items.length < maxItems && !isAdding) {
+    if (items?.length < maxItems && !isAdding) {
       setIsAdding(true);
       setTimeout(() => {
         setItems((prevItems) => [...prevItems, { id: uuidv4(), text: '' }]);
@@ -36,7 +36,7 @@ const ItemSection = ({
 
   const handleItemChange = (id: string, value: string) => {
     setItems((prevItems) =>
-      prevItems.map((item) =>
+      prevItems?.map((item) =>
         item.id === id ? { ...item, text: value } : item,
       ),
     );
@@ -51,13 +51,13 @@ const ItemSection = ({
     if (lastInput) {
       lastInput.focus();
     }
-  }, [items.length]);
+  }, [items?.length]);
 
   return (
     <>
       <h1 className={'title-effect'}>{title}</h1>
       <div className={'w-full'}>
-        {items.map((item, index) => (
+        {items?.map((item, index) => (
           <div key={item.id} className={'flex items-center mb-2'}>
             <ItemInput
               id={`${index + 1}`}
@@ -68,7 +68,7 @@ const ItemSection = ({
                 inputRefs.current[index] = el;
               }}
             />
-            {items.length > 1 && (
+            {items?.length > 1 && (
               <button
                 type={'button'}
                 onClick={() => deleteItem(item.id)}
@@ -84,7 +84,7 @@ const ItemSection = ({
             )}
           </div>
         ))}
-        {items.length < maxItems && (
+        {items?.length < maxItems && (
           <div className={'flex justify-center'}>
             <button
               type={'button'}

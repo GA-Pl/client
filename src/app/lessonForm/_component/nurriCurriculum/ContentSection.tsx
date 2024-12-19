@@ -17,7 +17,19 @@ const ContentSection = ({ contents, setContents }: ContentSectionProps) => {
   const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
-    if (contents.length === 0 && documentData && pathname === '/ai') {
+    if (contents.length === 0) {
+      setContents([
+        {
+          id: uuidv4(),
+          subtitle: '',
+          contents: [{ id: uuidv4(), text: '' }],
+        },
+      ]);
+    }
+  }, [contents, setContents]);
+
+  useEffect(() => {
+    if (contents?.length === 0 && documentData && pathname === '/ai') {
       const loadedContents = documentData.data.activity_content.map((item) => ({
         id: uuidv4(),
         subtitle: item.subtitle,
@@ -50,7 +62,7 @@ const ContentSection = ({ contents, setContents }: ContentSectionProps) => {
         c.id === contentId
           ? {
               ...c,
-              contents: c.contents.map((item, idx) =>
+              contents: c.contents?.map((item, idx) =>
                 idx === contentIndex ? { ...item, text: value } : item,
               ),
             }
@@ -60,7 +72,7 @@ const ContentSection = ({ contents, setContents }: ContentSectionProps) => {
   };
 
   const addContent = () => {
-    if (contents.length < 10 && !isAdding) {
+    if (contents?.length < 10 && !isAdding) {
       setIsAdding(true);
       const newContent = {
         id: uuidv4(),
@@ -122,13 +134,13 @@ const ContentSection = ({ contents, setContents }: ContentSectionProps) => {
       } else {
         const contentId = source.droppableId;
         setContents((prevContents) =>
-          prevContents.map(
+          prevContents?.map(
             (content): IContentItem =>
               content.id === contentId
                 ? {
                     ...content,
                     contents: reorder(
-                      content.contents.map(
+                      content?.contents?.map(
                         (subContent): ISubContentItem => ({
                           ...subContent,
                         }),
@@ -161,7 +173,7 @@ const ContentSection = ({ contents, setContents }: ContentSectionProps) => {
                   : 'white',
               }}
             >
-              {contents.map((content, index) => (
+              {contents?.map((content, index) => (
                 <ContentItem
                   key={content.id}
                   content={content}
