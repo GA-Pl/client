@@ -16,22 +16,16 @@ export default function OneSignalInitializer() {
           serviceWorkerParam: { scope: '/push/onesignal/' },
         });
 
-        console.log('OneSignal 초기화 완료');
-
         const permission = await OneSignal.Notifications.permissionNative;
-        console.log('푸시 알림 권한 상태:', permission);
 
         if (permission !== 'granted') {
           console.log('푸시 알림 권한 요청 중...');
           await OneSignal.Slidedown.promptPush();
         }
 
-        // 사용자 ID 확인 (externalUserId 사용)
         const userId = await OneSignal.User.PushSubscription.id;
-        console.log('사용자 ID:', userId);
 
         if (userId) {
-          // 서버로 사용자 ID 전송
           await sendSubscriptionToServer(userId);
         } else {
           console.log('사용자 ID를 가져올 수 없습니다.');

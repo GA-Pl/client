@@ -6,7 +6,6 @@ import RQProvider from '@/providers/RQProvider';
 import { auth } from '@/auth';
 import SideBar from './(main)/_component/NavBar/SideBar';
 import Logo from './(main)/_component/NavBar/Logo';
-import OneSignalInitializer from './(main)/_component/OneSignal/OneSignalInitializer';
 
 export const metadata: Metadata = {
   title: 'Gapple',
@@ -34,7 +33,7 @@ export default async function RootLayout({
         <AuthSession>
           <RQProvider>
             {/* OneSignal 초기화 및 권한 요청 */}
-            <OneSignalInitializer />
+
             {!session?.user && (
               <div className={'flex flex-col'}>
                 <Logo />

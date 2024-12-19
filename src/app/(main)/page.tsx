@@ -4,6 +4,7 @@ import FeedList from './_component/Feed/FeedList';
 import MainTop from './_component/MainTop/MainTop';
 import MonthlyTheme from './_component/MonthlyTheme/MonthlyTheme';
 import RecommendList from './_component/RecommendFeed/RecommendList';
+import OneSignalInitializer from './_component/OneSignal/OneSignalInitializer';
 
 async function MainPage() {
   const session = await auth();
@@ -13,6 +14,7 @@ async function MainPage() {
   }
   return (
     <div>
+      <OneSignalInitializer />
       <MainTop />
       <div className={'flex flex-col text-sm'}>
         <div

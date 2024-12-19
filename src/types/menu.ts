@@ -9,6 +9,7 @@ export interface MenuItemProps {
   activeIcon: string;
   link?: string;
   subMenuItems?: SubMenuItem[];
+  onClick?: () => void;
 }
 
 export const MENU_ITEMS: MenuItemProps[] = [

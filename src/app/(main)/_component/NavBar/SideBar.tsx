@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
@@ -7,6 +8,7 @@ import { usePathname } from 'next/navigation';
 import { MenuItemProps } from '@/types/menu';
 import MenuItem from './MenuItem';
 import ProfileIcon from './ProfileIcon';
+import NotificationModal from '../Notification/NotificationModal';
 
 export default function SideBar() {
   const { status } = useSession();
@@ -15,6 +17,11 @@ export default function SideBar() {
 
   const isSearchPage = pathname === '/search';
   const isRecordPage = pathname === '/createRecord';
+
+  const [isNotificationModalOpen, setNotificationModalOpen] = useState(false);
+
+  const openNotificationModal = () => setNotificationModalOpen(true);
+  const closeNotificationModal = () => setNotificationModalOpen(false);
 
   const MENU_ITEMS: MenuItemProps[] = [
     {
@@ -28,7 +35,7 @@ export default function SideBar() {
       name: '알림',
       icon: '/menu/alarm.PNG',
       activeIcon: '/menu/alarmh.PNG',
-      link: '/notifications',
+      onClick: openNotificationModal,
     },
     {
       name: '검색',
@@ -64,6 +71,10 @@ export default function SideBar() {
 
   return (
     <>
+      <NotificationModal
+        isOpen={isNotificationModalOpen}
+        onClose={closeNotificationModal}
+      />
       <div className={'fixed bottom-20 left-0 desktop:hidden laptop:hidden'}>
         <div className={'cursor-pointer m-4'}>
           <ProfileIcon />
@@ -103,16 +114,28 @@ export default function SideBar() {
             'flex w-dvw laptop:w-20 desktop:w-40 justify-around items-center border-t border-gray-100 tablet:border-none tablet:shadow-none tablet:flex-row desktop:flex-col desktop:mt-16 laptop:mt-16 laptop:flex-col'
           }
         >
-          {filteredMenuItems.map((item) => (
-            <MenuItem
-              key={item.name}
-              name={item.name}
-              icon={item.icon}
-              activeIcon={item.activeIcon}
-              link={item.link}
-              subMenuItems={item.subMenuItems}
-            />
-          ))}
+          {filteredMenuItems.map((item) =>
+            item.onClick ? (
+              <div key={item.name} onClick={item.onClick}>
+                <MenuItem
+                  name={item.name}
+                  icon={item.icon}
+                  activeIcon={item.activeIcon}
+                  link={item.link}
+                  subMenuItems={item.subMenuItems}
+                />
+              </div>
+            ) : (
+              <MenuItem
+                key={item.name}
+                name={item.name}
+                icon={item.icon}
+                activeIcon={item.activeIcon}
+                link={item.link}
+                subMenuItems={item.subMenuItems}
+              />
+            ),
+          )}
         </div>
 
         <div className={'hidden laptop:block'}>
