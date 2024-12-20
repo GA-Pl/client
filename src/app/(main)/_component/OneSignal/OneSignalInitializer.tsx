@@ -24,8 +24,18 @@ export default function OneSignalInitializer() {
           await OneSignal.Slidedown.promptPush();
         }
 
+        console.log('OneSignal.User', OneSignal.User);
         const userId = await OneSignal.User.PushSubscription.id;
 
+        console.log(
+          'OneSignal.User.PushSubscription',
+          OneSignal.User.PushSubscription,
+        );
+
+        console.log(
+          'OneSignal.User.PushSubscription.id',
+          OneSignal.User.PushSubscription.id,
+        );
         if (userId) {
           console.log('유저 아이디');
           console.log(userId);
