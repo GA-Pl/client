@@ -6,6 +6,7 @@ import { sendSubscriptionToServer } from './utils/sendSubscriptionToServer.ts';
 
 export default function OneSignalInitializer() {
   useEffect(() => {
+    console.log(process.env.NEXT_PUBLIC_ONESIGNAL_APP_ID);
     const initOneSignal = async () => {
       try {
         await OneSignal.init({
