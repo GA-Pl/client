@@ -6,7 +6,6 @@ import { sendSubscriptionToServer } from './utils/sendSubscriptionToServer.ts';
 
 export default function OneSignalInitializer() {
   useEffect(() => {
-    console.log(process.env.NEXT_PUBLIC_ONESIGNAL_APP_ID);
     const initOneSignal = async () => {
       try {
         await OneSignal.init({
@@ -18,6 +17,7 @@ export default function OneSignalInitializer() {
 
         const permission = await OneSignal.Notifications.permissionNative;
 
+        console.log('permission', permission);
         if (permission !== 'granted') {
           console.log('푸시 알림 권한 요청 중...');
           await OneSignal.Slidedown.promptPush();
@@ -26,6 +26,8 @@ export default function OneSignalInitializer() {
         const userId = await OneSignal.User.PushSubscription.id;
 
         if (userId) {
+          console.log('유저 아이디');
+          console.log(userId);
           await sendSubscriptionToServer(userId);
         } else {
           console.log('사용자 ID를 가져올 수 없습니다.');
