@@ -42,7 +42,6 @@ export default function OneSignalInitializer() {
         // 구독 ID 확인 및 처리
         const subscriptionId = OneSignal.User?.PushSubscription?.id;
         if (subscriptionId) {
-          console.log('구독 ID:', subscriptionId);
           await sendSubscriptionToServer(
             subscriptionId,
             session.accessToken || '',
