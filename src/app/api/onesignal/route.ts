@@ -11,7 +11,9 @@ export async function POST(req: NextRequest) {
   console.log(subscriptionId);
 
   try {
-    const data = await apiRequest('post', '/auth/subscription', subscriptionId);
+    const data = await apiRequest('post', '/auth/subscription', {
+      subscriptionId,
+    });
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     const message =
