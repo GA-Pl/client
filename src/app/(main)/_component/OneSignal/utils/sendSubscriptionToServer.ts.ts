@@ -5,11 +5,6 @@ export async function sendSubscriptionToServer(
   accessToken: string,
 ) {
   try {
-    console.log('보내는 데이터 확인:');
-    console.log('subscriptionId:', subscriptionId);
-    console.log('{subscriptionId}:', { subscriptionId });
-    console.log('accessToken:', accessToken);
-
     const response = await axios.post(
       '/api/onesignal',
       { subscriptionId },
@@ -20,8 +15,6 @@ export async function sendSubscriptionToServer(
         },
       },
     );
-
-    console.log('서버 응답:', response.status, response.data);
 
     if (response.status === 200) {
       console.log('구독 정보 저장 성공!');
