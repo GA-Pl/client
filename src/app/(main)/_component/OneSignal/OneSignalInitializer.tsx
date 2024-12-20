@@ -9,8 +9,12 @@ export default function OneSignalInitializer() {
   const { data: session } = useSession();
 
   useEffect(() => {
-    console.log(process.env.NEXT_PUBLIC_ONESIGNAL_APP_ID);
     const initOneSignal = async () => {
+      if (!session) {
+        console.log('세션이 없습니다. 초기화를 중단합니다.');
+        return;
+      }
+
       try {
         await OneSignal.init({
           appId: process.env.NEXT_PUBLIC_ONESIGNAL_APP_ID || '',
@@ -30,21 +34,11 @@ export default function OneSignalInitializer() {
         console.log('OneSignal.User', OneSignal.User);
         const userId = await OneSignal.User.PushSubscription.id;
 
-        console.log(
-          'OneSignal.User.PushSubscription',
-          OneSignal.User.PushSubscription,
-        );
-
-        console.log(
-          'OneSignal.User.PushSubscription.id',
-          OneSignal.User.PushSubscription.id,
-        );
-        if (userId && session) {
-          console.log('유저 아이디');
-          console.log(userId);
-          console.log('세션');
-          console.log(session.accessToken);
-          await sendSubscriptionToServer(userId, session.accessToken);
+        console.log('OneSignal.User.PushSubscription.id', userId);
+        if (userId) {
+          console.log('유저 아이디', userId);
+          console.log('세션 토큰', session.accessToken);
+          await sendSubscriptionToServer(userId, session.accessToken || '');
         } else {
           console.log('사용자 ID를 가져올 수 없습니다.');
         }
@@ -57,7 +51,7 @@ export default function OneSignalInitializer() {
     };
 
     initOneSignal();
-  }, []);
+  }, [session]);
 
   return null;
 }
