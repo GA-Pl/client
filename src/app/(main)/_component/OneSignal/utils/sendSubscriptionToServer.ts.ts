@@ -1,8 +1,14 @@
-export async function sendSubscriptionToServer(subscriptionId: string) {
+export async function sendSubscriptionToServer(
+  subscriptionId: string,
+  accessToken: string,
+) {
   try {
     const response = await fetch('/api/onesignal', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
       body: JSON.stringify({ subscriptionId }),
     });
 

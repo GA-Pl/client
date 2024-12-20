@@ -4,6 +4,12 @@ import { apiRequest } from '@/_lib/utils/api';
 export async function POST(req: NextRequest) {
   const body = await req.json();
   const { subscriptionId } = body;
+  console.log('body');
+  console.log(body);
+
+  console.log('subscriptionId');
+  console.log(subscriptionId);
+
   try {
     const data = await apiRequest('post', '/auth/subscription', subscriptionId);
     return NextResponse.json(data, { status: 200 });

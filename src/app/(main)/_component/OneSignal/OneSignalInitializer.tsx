@@ -2,9 +2,12 @@
 
 import { useEffect } from 'react';
 import OneSignal from 'react-onesignal';
+import { useSession } from 'next-auth/react';
 import { sendSubscriptionToServer } from './utils/sendSubscriptionToServer.ts';
 
 export default function OneSignalInitializer() {
+  const { data: session } = useSession();
+
   useEffect(() => {
     console.log(process.env.NEXT_PUBLIC_ONESIGNAL_APP_ID);
     const initOneSignal = async () => {
@@ -36,10 +39,12 @@ export default function OneSignalInitializer() {
           'OneSignal.User.PushSubscription.id',
           OneSignal.User.PushSubscription.id,
         );
-        if (userId) {
+        if (userId && session) {
           console.log('유저 아이디');
           console.log(userId);
-          await sendSubscriptionToServer(userId);
+          console.log('세션');
+          console.log(session.accessToken);
+          await sendSubscriptionToServer(userId, session.accessToken);
         } else {
           console.log('사용자 ID를 가져올 수 없습니다.');
         }
