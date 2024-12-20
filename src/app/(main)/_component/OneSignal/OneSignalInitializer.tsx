@@ -46,7 +46,7 @@ export default function OneSignalInitializer() {
     };
 
     initOneSignal();
-  }, [session]);
+  }, []);
 
   return null;
 }
