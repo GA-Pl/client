@@ -1,28 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { apiRequest } from '@/_lib/utils/api';
 
 export async function POST(req: NextRequest) {
+  const body = await req.json();
+  const { subscriptionId } = body;
   try {
-    const body = await req.json();
-    const { subscriptionId } = body;
-
-    if (!subscriptionId) {
-      return NextResponse.json(
-        { error: 'Subscription ID가 제공되지 않았습니다.' },
-        { status: 400 },
-      );
-    }
-
-    console.log('구독 ID 저장:', subscriptionId);
-
-    return NextResponse.json(
-      { message: '구독 정보 저장 성공!' },
-      { status: 200 },
-    );
+    const data = await apiRequest('post', '/auth/subscription', subscriptionId);
+    return NextResponse.json(data, { status: 200 });
   } catch (error) {
-    console.error('구독 정보 처리 중 오류 발생:', error);
+    const message =
+      error instanceof Error ? error.message : 'Internal Server Error';
+    console.error('구독 아이디 저장 실패', message);
     return NextResponse.json(
-      { error: '서버 오류가 발생했습니다.' },
-      { status: 500 },
+      { message },
+      { status: message === 'Authorization token is required' ? 401 : 500 },
     );
   }
 }
